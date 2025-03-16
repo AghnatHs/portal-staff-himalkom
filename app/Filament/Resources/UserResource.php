@@ -40,15 +40,15 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name')->placeholder("Ex. Budi Utomo")->required(),
                 TextInput::make('email')->email()->required(),
-                Select::make('role_id')
-                    ->label('Role')
-                    ->options(Role::pluck('name', 'id'))
-                    ->searchable()
+                Select::make('roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
                     ->preload()
+                    ->searchable()
                     ->required(),
                 Select::make('department_id')
                     ->label('Department')
-                    ->options(Department::pluck('name', 'id'))
+                    ->relationship('department', 'name')
                     ->searchable()
                     ->preload()
                     ->required()
@@ -59,7 +59,6 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('email')->searchable(),
                 TextColumn::make('department.name')
@@ -67,18 +66,19 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('roles.name')
-                    ->placeholder('Null')
+                    ->placeholder('Null'),
+                TextColumn::make('created_at')->dateTime()->sortable(),
+                TextColumn::make('updated_at')->label('last updated')->since()->sortable(),
             ])
             ->filters([
-                SelectFilter::make('role')
+                /*                 SelectFilter::make('role')
                     ->label('Filter by Role')
-                    ->options(Role::pluck('name', 'name'))
+                    ->options(Role::pluck('name', 'id'))
                     ->query(fn($query, $data) => $query->whereHas('roles', fn($q) => $q->where('name', $data))),
                 SelectFilter::make('department')
                     ->label('Filter by Department')
-                    ->options(Department::pluck('name', 'name'))
-                    ->query(fn($query, $data) => $query->whereHas('department', fn($q) => $q->where('name', $data)))
-            ])
+                    ->options(Department::pluck('name', 'id'))
+                    ->query(fn($query, $data) => $query->whereHas('department', fn($q) => $q->where('name', $data))) */])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -87,14 +87,6 @@ class UserResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function afterCreate($record)
-    {
-        $randomPassword = Str::random(12);
-        $record->password = Hash::make($randomPassword);
-        $record->save();
-        info("New user created: {$record->email} | Password: {$randomPassword}");
     }
 
     public static function getRelations(): array
