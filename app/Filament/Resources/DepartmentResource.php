@@ -6,9 +6,12 @@ use App\Filament\Resources\DepartmentResource\Pages;
 use App\Filament\Resources\DepartmentResource\RelationManagers;
 use App\Models\Department;
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,7 +31,9 @@ class DepartmentResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')->placeholder('Ex. Research and Technology')->required(),
+                TextInput::make('abbreviation')->placeholder('Ex. Richtech')->required(),
+                Textarea::make('description')->placeholder('Ex. Deskripsi departemen')->required()
             ]);
     }
 
@@ -36,7 +41,25 @@ class DepartmentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable()
+                    ->description(fn(Department $record): string => $record->abbreviation)
+                    ->wrap(),
+                TextColumn::make('description')->limit(50)->wrap(),
+                TextColumn::make('users')
+                    ->label('Managing Director')
+                    ->placeholder('Null')
+                    ->formatStateUsing(
+                        fn($record) =>
+                        $record->users()
+                            ->whereHas('roles', fn($q) => $q->where('name', 'managing director'))
+                            ->pluck('name')
+                            ->join(', ')
+                    )
+                    ->searchable(),
+                TextColumn::make('created_at')->dateTime()->sortable(),
+                TextColumn::make('updated_at')->label('last updated')->since()->sortable(),
             ])
             ->filters([
                 //
