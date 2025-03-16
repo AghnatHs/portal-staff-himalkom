@@ -33,6 +33,16 @@ class Department extends Model
             if (!$model->id) {
                 $model->id = Str::ulid()->toBase32(); // Generate ULID
             }
+
+            if (!$model->slug) {
+                $model->slug = Str::slug($model->name);
+            }
+        });
+
+        static::updating(function ($model) {
+            if (!$model->slug) {
+                $model->slug = Str::slug($model->name);
+            }
         });
     }
 }
