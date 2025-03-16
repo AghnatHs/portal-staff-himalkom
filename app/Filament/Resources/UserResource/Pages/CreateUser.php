@@ -18,4 +18,9 @@ class CreateUser extends CreateRecord
         $data['password'] = Hash::make($randomPassword);
         return $data;
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
