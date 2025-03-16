@@ -4,16 +4,18 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Filament\Panel;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasUlids, HasRoles, HasFactory, Notifiable, SoftDeletes;
@@ -54,6 +56,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
 
     protected static function boot()
     {
@@ -63,5 +66,10 @@ class User extends Authenticatable
                 $model->id = Str::ulid()->toBase32(); // Generate ULID
             }
         });
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@himalkom.com') && $this->hasVerifiedEmail();
     }
 }
