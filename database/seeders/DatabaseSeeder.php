@@ -13,6 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::create([
+            'name' => 'superadmin_kacow',
+            'email' => env("APP_FILAMENT_USER"),
+            'password' => bcrypt(env("APP_FILAMENT_PASSWORD")),
+            'email_verified_at' => now(),
+        ]);
+
         $this->call([RolePermissionSeeder::class]);
     }
 }
