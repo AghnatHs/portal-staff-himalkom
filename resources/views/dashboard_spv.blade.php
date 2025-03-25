@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout navigation='layouts.navigation_spv'>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -15,23 +15,12 @@
                     Hallo {{ Auth::user()->name }} | {{ Auth::user()->email }}
                 </div>
 
-                @hasrole('managing director')
+                @hasrole('supervisor')
                     <div class="p-6 text-gray-900 text-xl">
-                        You Are {{ Auth::user()->pluckRoleName('managing director') }} of {{ Auth::user()->department->name }}
+                        You Are {{ Auth::user()->pluckRoleName('supervisor') }}
                     </div>
                 @else
-                @endhasrole
+                @endrole
 
-                @hasrole('bph')
-                    <div class="p-6 text-gray-900 text-xl">
-                        >> You Are seeing this cuz you are bph (taroh list dept disini) <<
-                    </div>
-                @else
-                    <div class="p-6 text-gray-900 text-xl">
-                        >>You Are seeing this cuz you ain't bph cuh <<
-                    </div>
-                @endhasrole
             </div>
-        </div>
-    </div>
 </x-app-layout>
