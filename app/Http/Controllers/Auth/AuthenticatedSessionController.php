@@ -28,7 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+        $userRole = $user->pluckRoleNames();
+
+        if ($userRole->contains("managing director") || $userRole->contains("bph")) {
+            $departmentSlug = $user->department->slug;
+            return redirect()->intended(route('dashboard', ['slug' => $departmentSlug], absolute: false));
+        } else if ($userRole->contains("supervisor")) {
+            return redirect()->intended(route('dashboard.supervisor', absolute: false));
+        } else {
+            return redirect()->intended();
+        }
     }
 
     /**
