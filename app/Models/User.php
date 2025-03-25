@@ -15,6 +15,49 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * 
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $email
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $department_id
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Department|null $department
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read int|null $roles_count
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User permission($permissions, $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDepartmentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -30,6 +73,7 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
     ];
+    protected $with = ['department'];
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -49,6 +93,21 @@ class User extends Authenticatable implements FilamentUser
         return $this->belongsTo(Department::class);
     }
 
+    public function pluckRoleNames()
+    {
+        return $this->roles->pluck('name');
+    }
+
+    public function pluckRoleName(string $role): string
+    {
+        $roles = $this->pluckRoleNames();
+        if ($roles->contains($role)) {
+            return $role;
+        } else {
+            return '-';
+        }
+    }
+
     protected function casts(): array
     {
         return [
@@ -56,7 +115,7 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
         ];
     }
-    
+
 
     protected static function boot()
     {
