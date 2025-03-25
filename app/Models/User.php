@@ -73,7 +73,7 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
     ];
-    protected $with = ['department'];
+    protected $with = ['department', 'roles'];
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -87,6 +87,16 @@ class User extends Authenticatable implements FilamentUser
         'password',
         'remember_token',
     ];
+
+    public function getDashboardRoute(): string
+    {
+        $roles = $this->pluckRoleNames();
+        if ($roles->contains('managing director') || $roles->contains('bph')) {
+            return route('dashboard', ['slug' => $this->department->slug]);
+        } else { // supervisor
+            return route('dashboard.supervisor');
+        }
+    }
 
     public function department(): BelongsTo
     {
