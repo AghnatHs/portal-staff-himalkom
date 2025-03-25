@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 // Main dashboard (access only by user of its department or its role)
 Route::get('/dashboard/supervisor', [DepartmentController::class, 'showSupervisor'])
