@@ -17,8 +17,8 @@
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
     <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <img id="background" class="absolute -left-20 top-0 max-w-[877px]"
-            src="https://laravel.com/assets/img/welcome/background.svg" alt="Laravel background" />
+        <img id="background" class="absolute bg-contain bg-center w-screen" src="{{ asset('images/bg1.webp') }}"
+            alt="background" />
         <div
             class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
@@ -31,18 +31,25 @@
                         <x-application-logo width="150" height="150" />
                     </div>
                     @if (Route::has('login'))
-                        <nav class="-mx-3 flex flex-1 justify-center py-12">
+                        <nav class="-mx-3 flex flex-col justify-center items-center py-12">
                             @auth
                                 <div class="flex flex-col justify-center items-center text-center space-y-2">
                                     <p class="text-white">Hallo, {{ Auth::user()->name }} !</p>
                                     <a href="{{ Auth::user()->getDashboardRoute() }}"
-                                        class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                        class="font-[1000] rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 hover:scale-125 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                                         Dashboard
                                     </a>
                                 </div>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit"
+                                        class="mt-2 font-bold rounded-md px-3 py-2 bg-red-600 text-white transition hover:bg-red-700 hover:scale-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500">
+                                        Logout
+                                    </button>
+                                </form>
                             @else
                                 <a href="{{ route('login') }}"
-                                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                    class="font-[1000] rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 hover:scale-125 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                                     Log in
                                 </a>
                             @endauth
