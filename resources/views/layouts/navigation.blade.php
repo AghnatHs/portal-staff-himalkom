@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('workPrograms.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('workPrograms')">
+                    <x-nav-link :href="route('dashboard.workProgram.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('dashboard.workProgram.*')">
                         {{ __('Work Programs') }}
                     </x-nav-link>
 
@@ -81,11 +81,11 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="Auth::user()->getDashboardRoute()" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ 'Dashboard' }}
             </x-responsive-nav-link>
 
-            <x-nav-link :href="route('workPrograms.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('workPrograms')">
-                {{ __('Work Programs') }}
+            <x-nav-link :href="route('dashboard.workProgram.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('dashboard.workProgram.*')">
+                {{ 'Work Programs' }}
             </x-nav-link>
 
         </div>

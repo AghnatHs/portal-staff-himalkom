@@ -6,7 +6,7 @@
             <p class="text-red-500">{{ session('error') }}</p>
         @endif
 
-        <form action="{{ route('workProgram.update', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug]) }}" method="POST">
+        <form action="{{ route('dashboard.workProgram.update', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug]) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -62,7 +62,7 @@
                 <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
                     Simpan Perubahan
                 </button>
-                <a href="{{ route('workProgram.detail', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug]) }}"
+                <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug]) }}"
                     class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
                     Batal
                 </a>

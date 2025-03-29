@@ -65,11 +65,11 @@ class WorkProgramsController extends Controller
 
             WorkProgram::create($validated);
             DB::commit();
-            return redirect()->route('workPrograms.index', ['slug' => $slug])
+            return redirect()->route('dashboard.workProgram.index', ['slug' => $slug])
                 ->with('success', 'Program kerja berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('workPrograms.index', ['slug' => $slug])
+            return redirect()->route('dashboard.workProgram.index', ['slug' => $slug])
                 ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
         }
     }
@@ -112,7 +112,7 @@ class WorkProgramsController extends Controller
         $validated['department_id'] = $workProgram->department_id;
         $workProgram->update($validated);
 
-        return redirect()->route('workProgram.detail', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug])
+        return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug])
             ->with('success', 'Program berhasil diperbarui.');
     }
 
@@ -129,10 +129,10 @@ class WorkProgramsController extends Controller
 
         try {
             $workProgram->delete();
-            return redirect()->route('workPrograms.index', ['slug' => $workProgram->department->slug])
+            return redirect()->route('dashboard.workProgram.index', ['slug' => $workProgram->department->slug])
                 ->with('success', 'Program berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->route('workPrograms.index', ['slug' => $workProgram->department->slug])
+            return redirect()->route('dashboard.workProgram.index', ['slug' => $workProgram->department->slug])
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }

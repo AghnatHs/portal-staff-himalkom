@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function () {
 
 //WorkPrograms 
 
-Route::middleware('auth')->prefix('/dashboard/{slug}/workprograms')->group(function () {
-    Route::get('/', [WorkProgramsController::class, 'index'])->name('workPrograms.index');
+Route::middleware('auth')->prefix('/dashboard/{slug}/workprograms')->name('dashboard.')->group(function () {
+    Route::get('/', [WorkProgramsController::class, 'index'])->name('workProgram.index');
     Route::get('/{workProgram}', [WorkProgramsController::class, 'detail'])->name('workProgram.detail');
 
     Route::get('/create/{department}', [WorkProgramsController::class, 'create'])
