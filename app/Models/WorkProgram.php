@@ -29,11 +29,6 @@ class WorkProgram extends Model
         'spg_url'
     ];
 
-    protected $attributes = [
-        'lpj_url' => 'Belum diunggah',
-        'spg_url' => 'Belum diunggah',
-    ];
-
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
