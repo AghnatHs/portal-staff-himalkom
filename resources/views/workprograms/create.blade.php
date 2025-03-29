@@ -78,6 +78,31 @@
                             <option value="Nasional">Nasional</option>
                             <option value="Internasional">Internasional</option>
                         </select>
+                    @elseif($field === 'sources_of_funds')
+                        <div class="mb-4">
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="sources_of_funds[]" value="BPPTN"
+                                        {{ in_array('BPPTN', old('sources_of_funds', [])) ? 'checked' : '' }}
+                                        class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span>BPPTN</span>
+                                </label>
+
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="sources_of_funds[]" value="Dana Sekolah"
+                                        {{ in_array('Dana Sekolah', old('sources_of_funds', [])) ? 'checked' : '' }}
+                                        class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span>Dana Sekolah</span>
+                                </label>
+
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" name="sources_of_funds[]" value="Mandiri"
+                                        {{ in_array('Mandiri', old('sources_of_funds', [])) ? 'checked' : '' }}
+                                        class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span>Mandiri</span>
+                                </label>
+                            </div>
+                        </div>
                     @else
                         <input
                             type="{{ in_array($field, ['start_at', 'finished_at']) ? 'date' : (in_array($field, ['funds', 'participation_total']) ? 'number' : 'text') }}"

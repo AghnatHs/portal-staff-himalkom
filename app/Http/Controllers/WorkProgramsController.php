@@ -57,7 +57,8 @@ class WorkProgramsController extends Controller
                 'start_at' => 'required|date',
                 'finished_at' => 'required|date|after_or_equal:start_at',
                 'funds' => 'required|numeric|min:0',
-                'sources_of_funds' => 'required|string|max:255',
+                'sources_of_funds' => 'required|array',
+                'sources_of_funds.*' => 'string|max:255',
                 'participation_total' => 'required|integer|min:0',
                 'participation_coverage' => 'required|string|max:255',
             ]);
@@ -97,7 +98,8 @@ class WorkProgramsController extends Controller
             'start_at' => 'required|date',
             'finished_at' => 'required|date|after_or_equal:start_at',
             'funds' => 'required|numeric|min:0',
-            'sources_of_funds' => 'required|string|max:255',
+            'sources_of_funds' => 'required|array',
+            'sources_of_funds.*' => 'string|max:255',
             'participation_total' => 'required|integer|min:0',
             'participation_coverage' => 'required|string|max:255',
         ]);

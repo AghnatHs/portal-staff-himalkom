@@ -49,11 +49,41 @@
             </div>
 
             <div class="mb-4">
-                <label for="source_of_funds" class="block text-gray-700 font-semibold">Sumber Dana</label>
-                <input type="text" name="sources_of_funds" id="source_of_funds"
-                    value="{{ $workProgram->sources_of_funds }}"
-                    class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                <label for="sources_of_funds" class="block text-gray-700 font-semibold">
+                    Sumber Dana
+                </label>
+
+                <div class="space-y-2">
+                    @php
+                        $selectedSources = is_array($workProgram->sources_of_funds)
+                            ? $workProgram->sources_of_funds
+                            : json_decode($workProgram->sources_of_funds, true) ?? [];
+                    @endphp
+
+
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" name="sources_of_funds[]" value="BPPTN"
+                            {{ in_array('BPPTN', $selectedSources) ? 'checked' : '' }}
+                            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span>BPPTN</span>
+                    </label>
+
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" name="sources_of_funds[]" value="Dana Sekolah"
+                            {{ in_array('Dana Sekolah', $selectedSources) ? 'checked' : '' }}
+                            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span>Dana Sekolah</span>
+                    </label>
+
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" name="sources_of_funds[]" value="Mandiri"
+                            {{ in_array('Mandiri', $selectedSources) ? 'checked' : '' }}
+                            class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span>Mandiri</span>
+                    </label>
+                </div>
             </div>
+
 
             <div class="mb-4">
                 <label for="participation_total" class="block text-gray-700 font-semibold">Jumlah Partisipan</label>
