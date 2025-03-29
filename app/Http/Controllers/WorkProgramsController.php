@@ -101,23 +101,41 @@ class WorkProgramsController extends Controller
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
         }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'start_at' => 'required|date',
+            'finished_at' => 'required|date|after_or_equal:start_at',
+            'funds' => 'required|numeric|min:0',
+            'sources_of_funds' => 'required|array',
+            'sources_of_funds.*' => 'string|max:255',
+            'participation_total' => 'required|integer|min:0',
+            'participation_coverage' => 'required|string|max:255',
+            'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120'
+        ]);
+
         DB::beginTransaction();
 
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'description' => 'required|string',
-                'start_at' => 'required|date',
-                'finished_at' => 'required|date|after_or_equal:start_at',
-                'funds' => 'required|numeric|min:0',
-                'sources_of_funds' => 'required|array',
-                'sources_of_funds.*' => 'string|max:255',
-                'participation_total' => 'required|integer|min:0',
-                'participation_coverage' => 'required|string|max:255',
-            ]);
+            if ($request->hasFile('lpj_url')) {
+                $newFile = $request->file('lpj_url');
+                $oldFile = $workProgram->lpj_url;
+
+                if ($oldFile && Storage::disk('private')->exists($oldFile)) {
+                    if (md5_file($newFile->path()) !== md5_file(Storage::disk('private')->path($oldFile))) {
+                        Storage::disk('private')->delete($oldFile);
+                    }
+                }
+
+                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $newFile->getClientOriginalName());
+                $validated['lpj_url'] = $newFile->storeAs('private', $generatedFilename, 'private');
+            } else {
+                $validated['lpj_url'] = $workProgram->lpj_url;
+            }
+
 
             $validated['sources_of_funds'] = json_encode($validated['sources_of_funds']);
-            $validated['department_id'] = $workProgram->department_id;
             $workProgram->update($validated);
 
             DB::commit();

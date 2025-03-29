@@ -6,19 +6,20 @@
     </x-slot>
     <div class="max-w-3xl my-2 mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold mb-4">Edit Program Kerja</h2>
-
-        @if (session('error'))
+        @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6 border border-red-400">
                 <strong>Terjadi kesalahan:</strong>
                 <ul class="list-disc pl-5">
-                    {{ session('error') }}
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
             </div>
         @endif
 
         <form
             action="{{ route('dashboard.workProgram.update', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"
-            method="POST">
+            method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -118,10 +119,30 @@
                 </select>
             </div>
 
+            <div class="mb-4">
+                <label for="lpj_url" class="block font-semibold text-gray-700">Upload LPJ (pdf, max: 5 MB)</label>
+                @if ($workProgram->lpj_url)
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600">File LPJ:</p>
+                        <p class="text-xs text-gray-800">{{ explode('/', $workProgram->lpj_url)[1] }}</p>
+                        <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
+                            tidak ingin mengubah file</p>
+                    </div>
+                @else
+                    <div class="bg-red-200 p-4 mb-2 rounded-lg">
+                        <p class="text-gray-800">File LPJ belum diunggah, silahkan unggah disini</p>
+                    </div>
+                @endif
+
+                <input type="file" name="lpj_url" id="lpj_url" accept="application/pdf"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
+            </div>
+
 
 
             <div class="flex space-x-2">
-                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
                     Simpan Perubahan
                 </button>
                 <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"

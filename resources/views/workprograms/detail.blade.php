@@ -66,7 +66,7 @@
         @if ($workProgram->lpj_url)
             <div class="bg-gray-100 p-4 rounded-lg">
                 <p class="text-sm text-gray-600">File LPJ:</p>
-                <a class="text-red-800 hover:text-red-500"
+                <a class="text-red-700 hover:text-red-500"
                     href="{{ route('pdf.show', ['filename' => explode('/', $workProgram->lpj_url)[1]]) }}" target="_blank">View or
                     Download File</a>
                 <p class="text-xs text-gray-800">({{ explode('/', $workProgram->lpj_url)[1] }})</p>
