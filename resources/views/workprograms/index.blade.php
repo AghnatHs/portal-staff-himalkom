@@ -38,7 +38,8 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse ($department->workPrograms as $workProgram)
-                <div class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition">
+                <div
+                    class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition flex flex-col">
                     <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $workProgram->name }}</h2>
                     <p class="text-gray-600 text-sm mb-4">{{ Str::limit($workProgram->description, 100, '...') }}</p>
                     <p class="text-gray-500 text-sm mb-4">{{ date('d M Y', strtotime($workProgram->start_at)) }} -
@@ -47,11 +48,15 @@
                     <p class="text-gray-500 text-sm mb-4">
                         Last updated : {{ \Carbon\Carbon::parse($workProgram->created_at)->diffForHumans() }}
                     </p>
-                    <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department]) }}"
-                        class="inline-block text-blue-600 font-semibold hover:underline">
-                        Selengkapnya →
-                    </a>
+
+                    <div class="mt-auto">
+                        <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department]) }}"
+                            class="inline-block text-blue-600 font-semibold hover:underline">
+                            Selengkapnya →
+                        </a>
+                    </div>
                 </div>
+
             @empty
                 <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center items-center h-40">
                     <p class="text-gray-500 text-lg font-semibold">No data available.</p>
