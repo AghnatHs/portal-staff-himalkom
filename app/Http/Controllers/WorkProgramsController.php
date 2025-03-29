@@ -15,24 +15,43 @@ use Illuminate\View\View;
 
 class WorkProgramsController extends Controller
 {
-
     public function index(Department $department): View
     {
+        $userDepartment = Auth::user()->department;
+        if ($department->id != $userDepartment->id) {
+            abort(403, 'Unauthorized access to this department');
+        }
+
         return view('workprograms.index', ['department' => $department]);
     }
 
     public function detail(Department $department, WorkProgram $workProgram): View
     {
+        $userDepartment = Auth::user()->department;
+        if ($department->id != $userDepartment->id) {
+            abort(403, 'Unauthorized access to this department');
+        }
+
         return view('workprograms.detail', ['workProgram' => $workProgram]);
     }
 
     public function create(Department $department): View
     {
+        $userDepartment = Auth::user()->department;
+        if ($department->id != $userDepartment->id) {
+            abort(403, 'Unauthorized access to this department');
+        }
+
         return view('workprograms.create', ['department' => $department]);
     }
 
     public function store(Request $request, Department $department)
     {
+        $userDepartment = Auth::user()->department;
+        if ($department->id != $userDepartment->id) {
+            abort(403, 'Unauthorized access to this department');
+        }
+
         DB::beginTransaction();
 
         try {
@@ -62,6 +81,11 @@ class WorkProgramsController extends Controller
 
     public function edit(Department $department, WorkProgram $workProgram)
     {
+        $userDepartment = Auth::user()->department;
+        if ($department->id != $userDepartment->id) {
+            abort(403, 'Unauthorized access to this department');
+        }
+
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
         }
@@ -72,6 +96,11 @@ class WorkProgramsController extends Controller
 
     public function update(Request $request, Department $department, WorkProgram $workProgram)
     {
+        $userDepartment = Auth::user()->department;
+        if ($department->id != $userDepartment->id) {
+            abort(403, 'Unauthorized access to this department');
+        }
+
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
         }
@@ -97,6 +126,11 @@ class WorkProgramsController extends Controller
 
     public function destroy(Department $department, WorkProgram $workProgram)
     {
+        $userDepartment = Auth::user()->department;
+        if ($department->id != $userDepartment->id) {
+            abort(403, 'Unauthorized access to this department');
+        }
+
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk menghapus program ini.');
         }

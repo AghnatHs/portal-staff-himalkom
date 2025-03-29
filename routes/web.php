@@ -20,26 +20,17 @@ Route::middleware('auth')->group(function () {
         ->name('dashboard');
 });
 
-// Department view (access only by managing director of dept, bph, or supervisor)
-// TODO: Refactor this code
-
-// Breeze profile
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-});
-
-// WorkPrograms 
-
 Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
     Route::get('/', [WorkProgramsController::class, 'index'])
+        ->middleware('role:managing director')
         ->name('workProgram.index');
 
     Route::get('/create', [WorkProgramsController::class, 'create'])
         ->middleware('role:managing director')
         ->name('workProgram.create');
-        
+
     Route::get('/{workProgram}', [WorkProgramsController::class, 'detail'])
+        ->middleware('role:managing director')
         ->name('workProgram.detail');
 
     Route::get('/{workProgram}/edit', [WorkProgramsController::class, 'edit'])
@@ -57,6 +48,15 @@ Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->
     Route::delete('/{workProgram}', [WorkProgramsController::class, 'destroy'])
         ->middleware('role:managing director')
         ->name('workProgram.destroy');
+});
+
+// Department view (access only by managing director of dept, bph, or supervisor)
+// TODO: Refactor this code
+
+// Breeze profile
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 require __DIR__ . '/auth.php';
