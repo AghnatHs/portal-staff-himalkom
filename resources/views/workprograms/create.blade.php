@@ -42,7 +42,7 @@
         </script>
 
         <form action="{{ route('dashboard.workProgram.store', ['department' => $department]) }}" method="POST"
-            class=" p-6 shadow-md rounded-md space-y-4">
+            enctype="multipart/form-data" class=" p-6 shadow-md rounded-md space-y-4">
             @csrf
 
             @php
@@ -55,6 +55,7 @@
                     'sources_of_funds' => 'Sumber Dana',
                     'participation_total' => 'Total Partisipasi',
                     'participation_coverage' => 'Cakupan Partisipasi',
+                    'lpj_url' => 'Upload LPJ (pdf, max: 5 MB)',
                 ];
             @endphp
 
@@ -102,6 +103,11 @@
                                     <span>Mandiri</span>
                                 </label>
                             </div>
+                        </div>
+                    @elseif($field === 'lpj_url')
+                        <div class="mb-4">
+                            <input type="file" name="lpj_url" id="lpj_url" accept="application/pdf"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
                         </div>
                     @else
                         <input

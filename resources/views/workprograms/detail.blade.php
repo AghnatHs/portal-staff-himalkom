@@ -30,7 +30,7 @@
             @endif
         </script>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
             <div class="bg-gray-100 p-4 rounded-lg">
                 <p class="text-sm text-gray-600">Deskripsi:</p>
                 <p class="text-gray-800">{{ $workProgram->description }}</p>
@@ -61,7 +61,22 @@
                 <p class="text-sm text-gray-600">Cakupan Partisipasi:</p>
                 <p class="text-gray-800">{{ $workProgram->participation_coverage }}</p>
             </div>
+
         </div>
+        @if ($workProgram->lpj_url)
+            <div class="bg-gray-100 p-4 rounded-lg">
+                <p class="text-sm text-gray-600">File LPJ:</p>
+                <a class="text-red-800 hover:text-red-500"
+                    href="{{ route('pdf.show', ['filename' => explode('/', $workProgram->lpj_url)[1]]) }}" target="_blank">View or
+                    Download File</a>
+                <p class="text-xs text-gray-800">({{ explode('/', $workProgram->lpj_url)[1] }})</p>
+            </div>
+        @else
+            <div class="bg-red-200 p-4 rounded-lg">
+                <p class="text-sm text-gray-600">File LPJ:</p>
+                <p class="text-gray-800">File LPJ belum diunggah</p>
+            </div>
+        @endif
 
 
         <div class="mt-6 flex justify-between">

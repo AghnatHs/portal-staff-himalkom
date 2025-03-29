@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WorkProgramsController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
         ->name('dashboard');
 });
 
+// Work Programs
 Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
     Route::get('/', [WorkProgramsController::class, 'index'])
         ->middleware('role:managing director')
@@ -49,6 +51,10 @@ Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->
         ->middleware('role:managing director')
         ->name('workProgram.destroy');
 });
+
+// Serving Private pdfs
+Route::get('/pdf/{filename}', [PDFController::class, 'showPrivatePdf'])
+    ->name('pdf.show');
 
 // Department view (access only by managing director of dept, bph, or supervisor)
 // TODO: Refactor this code

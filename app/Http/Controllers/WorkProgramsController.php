@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WorkProgram;
+use Illuminate\View\View;
 use App\Models\Department;
 
-use Illuminate\Http\Client\Response;
+use App\Models\WorkProgram;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
-
+use Illuminate\Http\Client\Response;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class WorkProgramsController extends Controller
 {
@@ -48,30 +49,39 @@ class WorkProgramsController extends Controller
             abort(403, 'Anda tidak memiliki izin untuk menambah program untuk departemen ini.');
         }
 
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'start_at' => 'required|date',
+            'finished_at' => 'required|date|after_or_equal:start_at',
+            'funds' => 'required|numeric|min:0',
+            'sources_of_funds' => 'required|array',
+            'sources_of_funds.*' => 'string|max:255',
+            'participation_total' => 'required|integer|min:0',
+            'participation_coverage' => 'required|string|max:255',
+            'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120'
+        ]);
+
         DB::beginTransaction();
 
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'description' => 'required|string',
-                'start_at' => 'required|date',
-                'finished_at' => 'required|date|after_or_equal:start_at',
-                'funds' => 'required|numeric|min:0',
-                'sources_of_funds' => 'required|array',
-                'sources_of_funds.*' => 'string|max:255',
-                'participation_total' => 'required|integer|min:0',
-                'participation_coverage' => 'required|string|max:255',
-            ]);
-
+            if ($request->hasFile('lpj_url')) {
+                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $request->file('lpj_url')->getClientOriginalName());
+                $lpjPath = $request->file('lpj_url')->storeAs('private', $generatedFilename, 'private');
+                $validated['lpj_url'] = $lpjPath;
+            }
+            $validated['sources_of_funds'] = json_encode($validated['sources_of_funds']);
             $validated['department_id'] = Auth::user()->department->id;
 
             WorkProgram::create($validated);
             DB::commit();
+
             return redirect()->route('dashboard.workProgram.index', ['department' => $department])
                 ->with('success', 'Program kerja berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('dashboard.workProgram.index', ['department' => $department])
+            return redirect()->route('dashboard.workProgram.create', ['department' => $department])
+                ->withInput()
                 ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
         }
     }
@@ -106,14 +116,16 @@ class WorkProgramsController extends Controller
                 'participation_coverage' => 'required|string|max:255',
             ]);
 
+            $validated['sources_of_funds'] = json_encode($validated['sources_of_funds']);
             $validated['department_id'] = $workProgram->department_id;
             $workProgram->update($validated);
 
+            DB::commit();
             return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department])
                 ->with('success', 'Program berhasil diperbarui.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department])
+            return redirect()->route('dashboard.workProgram.edit', ['workProgram' => $workProgram, 'department' => $department])
                 ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
         }
     }
