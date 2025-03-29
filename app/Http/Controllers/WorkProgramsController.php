@@ -91,24 +91,31 @@ class WorkProgramsController extends Controller
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
         }
+        DB::beginTransaction();
 
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'start_at' => 'required|date',
-            'finished_at' => 'required|date|after_or_equal:start_at',
-            'funds' => 'required|numeric|min:0',
-            'sources_of_funds' => 'required|array',
-            'sources_of_funds.*' => 'string|max:255',
-            'participation_total' => 'required|integer|min:0',
-            'participation_coverage' => 'required|string|max:255',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'start_at' => 'required|date',
+                'finished_at' => 'required|date|after_or_equal:start_at',
+                'funds' => 'required|numeric|min:0',
+                'sources_of_funds' => 'required|array',
+                'sources_of_funds.*' => 'string|max:255',
+                'participation_total' => 'required|integer|min:0',
+                'participation_coverage' => 'required|string|max:255',
+            ]);
 
-        $validated['department_id'] = $workProgram->department_id;
-        $workProgram->update($validated);
+            $validated['department_id'] = $workProgram->department_id;
+            $workProgram->update($validated);
 
-        return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department])
-            ->with('success', 'Program berhasil diperbarui.');
+            return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department])
+                ->with('success', 'Program berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department])
+                ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
+        }
     }
 
 
@@ -123,6 +130,7 @@ class WorkProgramsController extends Controller
             return redirect()->route('dashboard.workProgram.index', ['department' => $department])
                 ->with('success', 'Program berhasil dihapus.');
         } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()->route('dashboard.workProgram.index', ['department' => $department])
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
