@@ -1,6 +1,11 @@
 <x-app-layout>
-    <div class="max-w-4xl mx-auto py-8 px-6 bg-gray-50 shadow-lg rounded-lg">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Buat Program Kerja untuk {{ $department->name }}
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Program Kerja - {{ $department->name }}
+        </h2>
+    </x-slot>
+    <div class="max-w-4xl mx-auto my-2 py-8 px-6 bg-gray-50 shadow-lg rounded-lg">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Tambah Program Kerja untuk {{ $department->name }}
         </h1>
 
         @if ($errors->any())
@@ -55,7 +60,8 @@
 
             @foreach ($fields as $field => $label)
                 <div>
-                    <label for="{{ $field }}" class="block font-semibold text-gray-700">{{ $label }}</label>
+                    <label for="{{ $field }}"
+                        class="block font-semibold text-gray-700">{{ $label }}</label>
                     @if ($field === 'description')
                         <textarea name="{{ $field }}" required
                             class="border p-3 w-full rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none">{{ old($field) }}</textarea>

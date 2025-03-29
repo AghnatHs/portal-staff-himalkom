@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Program Kerja - {{ $workProgram->department->name }} - "{{ $workProgram->name }}"
+        </h2>
+    </x-slot>
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
 
         <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ $workProgram->name }}</h1>

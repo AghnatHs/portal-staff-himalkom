@@ -1,6 +1,11 @@
 <x-app-layout>
-    <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold mb-4">✏️ Edit Program Kerja</h2>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Program Kerja - {{ $workProgram->department->name }} - "{{ $workProgram->name }}"
+        </h2>
+    </x-slot>
+    <div class="max-w-3xl my-2 mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4">Edit Program Kerja</h2>
 
         @if (session('error'))
             <p class="text-red-500">{{ session('error') }}</p>
