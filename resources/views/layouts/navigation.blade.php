@@ -13,11 +13,11 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="Auth::user()->getDashboardRoute()" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        Dashboard
                     </x-nav-link>
 
                     <x-nav-link :href="route('dashboard.workProgram.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('dashboard.workProgram.*')">
-                        {{ __('Work Programs') }}
+                        Program Kerja
                     </x-nav-link>
 
                 </div>
