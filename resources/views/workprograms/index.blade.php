@@ -42,14 +42,14 @@
                     class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition flex flex-col">
                     <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $workProgram->name }}</h2>
                     <p class="text-gray-600 text-sm mb-4">{{ Str::limit($workProgram->description, 100, '...') }}</p>
-                    <p class="text-gray-500 text-sm mb-4">{{ date('d M Y', strtotime($workProgram->start_at)) }} -
-                        {{ date('d M Y', strtotime($workProgram->finished_at)) }}
-                    </p>
-                    <p class="text-gray-500 text-sm mb-4">
-                        Last updated : {{ \Carbon\Carbon::parse($workProgram->created_at)->diffForHumans() }}
-                    </p>
 
                     <div class="mt-auto">
+                        <p class="text-gray-500 text-sm mb-4">{{ date('d M Y', strtotime($workProgram->start_at)) }} -
+                            {{ date('d M Y', strtotime($workProgram->finished_at)) }}
+                        </p>
+                        <p class="text-gray-500 text-sm mb-4">
+                            Last updated : {{ \Carbon\Carbon::parse($workProgram->created_at)->diffForHumans() }}
+                        </p>
                         <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department]) }}"
                             class="inline-block text-blue-600 font-semibold hover:underline">
                             Selengkapnya →
