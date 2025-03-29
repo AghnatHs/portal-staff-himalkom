@@ -32,9 +32,9 @@ class AuthenticatedSessionController extends Controller
         $userRole = $user->pluckRoleNames();
 
         if ($userRole->contains("managing director") || $userRole->contains("bph")) {
-            return redirect()->intended(route('dashboard', ['department' => $user->department], absolute: false));
+            return redirect()->route('dashboard', ['department' => $user->department]);
         } else if ($userRole->contains("supervisor")) {
-            return redirect()->intended(route('dashboard.supervisor', absolute: false));
+            return redirect()->route('dashboard.supervisor');
         } else {
             return redirect()->intended();
         }
