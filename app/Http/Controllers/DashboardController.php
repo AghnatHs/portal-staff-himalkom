@@ -9,9 +9,8 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function show(string $slug) : View
+    public function show(Department $department): View
     {
-        $department = Department::where('slug', $slug)->first();
         $userDepartment = Auth::user()->department;
 
         if (!$department) {
@@ -24,7 +23,7 @@ class DashboardController extends Controller
         return view('dashboard');
     }
 
-    public function showSupervisor() : View
+    public function showSupervisor(): View
     {
         return view('dashboard_spv');
     }
