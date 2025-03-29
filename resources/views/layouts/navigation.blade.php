@@ -15,6 +15,11 @@
                     <x-nav-link :href="Auth::user()->getDashboardRoute()" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('workPrograms.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('workPrograms')">
+                        {{ __('Work Programs') }}
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -78,6 +83,11 @@
             <x-responsive-nav-link :href="Auth::user()->getDashboardRoute()" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <x-nav-link :href="route('workPrograms.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('workPrograms')">
+                {{ __('Work Programs') }}
+            </x-nav-link>
+
         </div>
 
         <!-- Responsive Settings Options -->

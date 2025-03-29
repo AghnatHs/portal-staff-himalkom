@@ -55,6 +55,11 @@ class Department extends Model
         return $this->hasMany(User::class);
     }
 
+    public function workPrograms(): HasMany
+    {
+        return $this->hasMany(WorkProgram::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
