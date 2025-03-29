@@ -65,6 +65,10 @@
                     @if ($field === 'description')
                         <textarea name="{{ $field }}" required
                             class="border p-3 w-full rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none">{{ old($field) }}</textarea>
+                    @elseif($field === 'funds')
+                        <input type="text" id="funds_display" value="{{ number_format(0, 0, ',', '.') }}"
+                            class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <input type="hidden" name="funds" id="funds">
                     @else
                         <input
                             type="{{ in_array($field, ['start_at', 'finished_at']) ? 'date' : (in_array($field, ['funds', 'participation_total']) ? 'number' : 'text') }}"
@@ -86,3 +90,26 @@
         </form>
     </div>
 </x-app-layout>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const displayInput = document.getElementById("funds_display");
+        const hiddenInput = document.getElementById("funds");
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'decimal'
+            }).format(value);
+        }
+
+        function unformatCurrency(value) {
+            return value.replace(/\./g, "");
+        }
+
+        displayInput.addEventListener("input", function(e) {
+            let rawValue = this.value.replace(/\D/g, "");
+            this.value = formatCurrency(rawValue);
+            hiddenInput.value = unformatCurrency(rawValue);
+        });
+    });
+</script>
