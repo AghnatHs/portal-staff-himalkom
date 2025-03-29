@@ -1,6 +1,10 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Program Kerja - {{ $department->name }}
+        </h2>
+    </x-slot>
     <div class="max-w-6xl mx-auto py-8 px-4">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Program Kerja - {{ $department->name }}</h1>
 
         <script>
             @if ($message = session('success'))
