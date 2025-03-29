@@ -8,7 +8,12 @@
         <h2 class="text-2xl font-bold mb-4">Edit Program Kerja</h2>
 
         @if (session('error'))
-            <p class="text-red-500">{{ session('error') }}</p>
+            <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6 border border-red-400">
+                <strong>Terjadi kesalahan:</strong>
+                <ul class="list-disc pl-5">
+                    {{ session('error') }}
+                </ul>
+            </div>
         @endif
 
         <form
