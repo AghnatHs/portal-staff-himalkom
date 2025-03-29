@@ -16,36 +16,22 @@ use Illuminate\View\View;
 class WorkProgramsController extends Controller
 {
 
-    public function index(string $slug): View
+    public function index(Department $department): View
     {
-        $department = Department::where('slug', $slug)->with('workPrograms')->first();
-
-        if (!$department) {
-            abort(404, 'Department not found');
-        }
-
         return view('workprograms.index', ['department' => $department]);
     }
 
-    public function detail(string $slug, WorkProgram $workProgram): View
+    public function detail(Department $department, WorkProgram $workProgram): View
     {
-        if (!$workProgram) {
-            abort(404, 'Workprogram not found');
-        }
-
         return view('workprograms.detail', ['workProgram' => $workProgram]);
     }
 
-    public function create(string $slug, Department $department): View
+    public function create(Department $department): View
     {
-        if (!$department) {
-            abort(404, 'Department not found');
-        }
-
         return view('workprograms.create', ['department' => $department]);
     }
 
-    public function store(string $slug, Request $request)
+    public function store(Request $request, Department $department)
     {
         DB::beginTransaction();
 
@@ -65,21 +51,17 @@ class WorkProgramsController extends Controller
 
             WorkProgram::create($validated);
             DB::commit();
-            return redirect()->route('dashboard.workProgram.index', ['slug' => $slug])
+            return redirect()->route('dashboard.workProgram.index', ['department' => $department])
                 ->with('success', 'Program kerja berhasil ditambahkan!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('dashboard.workProgram.index', ['slug' => $slug])
+            return redirect()->route('dashboard.workProgram.index', ['department' => $department])
                 ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
         }
     }
 
-    public function edit(string $slug, WorkProgram $workProgram)
+    public function edit(Department $department, WorkProgram $workProgram)
     {
-        if (!$workProgram) {
-            abort(404, "Work Program Not Found");
-        }
-
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
         }
@@ -88,12 +70,8 @@ class WorkProgramsController extends Controller
     }
 
 
-    public function update(Request $request, string $slug, WorkProgram $workProgram)
+    public function update(Request $request, Department $department, WorkProgram $workProgram)
     {
-        if (!$workProgram) {
-            abort(404, "Work Program Not Found");
-        }
-
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
         }
@@ -112,27 +90,23 @@ class WorkProgramsController extends Controller
         $validated['department_id'] = $workProgram->department_id;
         $workProgram->update($validated);
 
-        return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug])
+        return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department])
             ->with('success', 'Program berhasil diperbarui.');
     }
 
 
-    public function destroy(string $slug, WorkProgram $workProgram)
+    public function destroy(Department $department, WorkProgram $workProgram)
     {
-        if (!$workProgram) {
-            abort(404, "Work Program Not Found");
-        }
-
         if (Auth::user()->department_id !== $workProgram->department_id) {
             abort(403, 'Anda tidak memiliki izin untuk menghapus program ini.');
         }
 
         try {
             $workProgram->delete();
-            return redirect()->route('dashboard.workProgram.index', ['slug' => $workProgram->department->slug])
+            return redirect()->route('dashboard.workProgram.index', ['department' => $department])
                 ->with('success', 'Program berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->route('dashboard.workProgram.index', ['slug' => $workProgram->department->slug])
+            return redirect()->route('dashboard.workProgram.index', ['department' => $department])
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }

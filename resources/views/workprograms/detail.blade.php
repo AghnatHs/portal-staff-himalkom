@@ -60,17 +60,17 @@
 
 
         <div class="mt-6 flex justify-between">
-            <a href="{{ route('dashboard.workProgram.index', ['slug' => $workProgram->department->slug]) }}"
+            <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}"
                 class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">
                 ← Kembali
             </a>
 
-            <a href="{{ route('dashboard.workProgram.edit', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug]) }}"
+            <a href="{{ route('dashboard.workProgram.edit', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"
                 class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
                 Edit Program
             </a>
             <form
-                action="{{ route('dashboard.workProgram.destroy', ['workProgram' => $workProgram, 'slug' => $workProgram->department->slug]) }}"
+                action="{{ route('dashboard.workProgram.destroy', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"
                 method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
                 @csrf
                 @method('DELETE')

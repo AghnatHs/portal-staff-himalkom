@@ -16,7 +16,7 @@
                         Dashboard
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard.workProgram.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('dashboard.workProgram.*')">
+                    <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
                         Program Kerja
                     </x-nav-link>
 
@@ -84,7 +84,7 @@
                 {{ 'Dashboard' }}
             </x-responsive-nav-link>
 
-            <x-nav-link :href="route('dashboard.workProgram.index', ['slug' => Auth::user()->department->slug])" :active="request()->routeIs('dashboard.workProgram.*')">
+            <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
                 {{ 'Work Programs' }}
             </x-nav-link>
 

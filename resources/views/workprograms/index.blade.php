@@ -30,7 +30,7 @@
         </script>
 
         <div class="flex justify-center mb-6">
-            <a href="{{ route('dashboard.workProgram.create', ['department' => $department, 'slug' => $department->slug]) }}"
+            <a href="{{ route('dashboard.workProgram.create', ['department' => $department]) }}"
                 class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
                 Tambah Program Kerja
             </a>
@@ -43,7 +43,7 @@
                     <p class="text-gray-600 text-sm mb-4">{{ Str::limit($workProgram->description, 100, '...') }}</p>
                     <p class="text-gray-500 text-sm mb-4">{{ $workProgram->start_at }} - {{ $workProgram->finished_at }}
                     </p>
-                    <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'slug' => $department->slug]) }}"
+                    <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department]) }}"
                         class="inline-block text-blue-600 font-semibold hover:underline">
                         Selengkapnya →
                     </a>

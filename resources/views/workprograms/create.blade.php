@@ -36,7 +36,7 @@
             @endif
         </script>
 
-        <form action="{{ route('dashboard.workProgram.store', ['slug' => $department->slug]) }}" method="POST"
+        <form action="{{ route('dashboard.workProgram.store', ['department' => $department]) }}" method="POST"
             class=" p-6 shadow-md rounded-md space-y-4">
             @csrf
 

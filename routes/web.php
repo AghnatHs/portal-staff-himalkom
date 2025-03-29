@@ -29,15 +29,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-//WorkPrograms 
+// WorkPrograms 
 
-Route::middleware('auth')->prefix('/dashboard/{slug}/workprograms')->name('dashboard.')->group(function () {
-    Route::get('/', [WorkProgramsController::class, 'index'])->name('workProgram.index');
-    Route::get('/{workProgram}', [WorkProgramsController::class, 'detail'])->name('workProgram.detail');
+Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
+    Route::get('/', [WorkProgramsController::class, 'index'])
+        ->name('workProgram.index');
 
-    Route::get('/create/{department}', [WorkProgramsController::class, 'create'])
+    Route::get('/create', [WorkProgramsController::class, 'create'])
         ->middleware('role:managing director')
         ->name('workProgram.create');
+        
+    Route::get('/{workProgram}', [WorkProgramsController::class, 'detail'])
+        ->name('workProgram.detail');
 
     Route::get('/{workProgram}/edit', [WorkProgramsController::class, 'edit'])
         ->middleware('role:managing director')
