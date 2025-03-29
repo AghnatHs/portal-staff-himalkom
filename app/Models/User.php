@@ -92,7 +92,7 @@ class User extends Authenticatable implements FilamentUser
     {
         $roles = $this->pluckRoleNames();
         if ($roles->contains('managing director') || $roles->contains('bph')) {
-            return route('dashboard', ['slug' => $this->department->slug]);
+            return route('dashboard', ['department' => $this->department]);
         } else { // supervisor
             return route('dashboard.supervisor');
         }

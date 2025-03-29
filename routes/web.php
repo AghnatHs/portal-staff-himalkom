@@ -15,7 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/supervisor', [DashboardController::class, 'showSupervisor'])
         ->middleware('role:supervisor')
         ->name('dashboard.supervisor');
-    Route::get('/dashboard/{slug}', [DashboardController::class, 'show'])
+    Route::get('/dashboard/{department:slug}', [DashboardController::class, 'show'])
         ->middleware('role:managing director|bph')
         ->name('dashboard');
 });
