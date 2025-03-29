@@ -69,6 +69,15 @@
                         <input type="text" id="funds_display" value="{{ number_format(0, 0, ',', '.') }}"
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
                         <input type="hidden" name="funds" id="funds">
+                    @elseif($field === 'participation_coverage')
+                        <select name="participation_coverage" id="participation_coverage"
+                            class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="Prodi">Prodi</option>
+                            <option value="Sekolah">Sekolah</option>
+                            <option value="IPB">IPB</option>
+                            <option value="Nasional">Nasional</option>
+                            <option value="Internasional">Internasional</option>
+                        </select>
                     @else
                         <input
                             type="{{ in_array($field, ['start_at', 'finished_at']) ? 'date' : (in_array($field, ['funds', 'participation_total']) ? 'number' : 'text') }}"

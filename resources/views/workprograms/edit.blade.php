@@ -63,12 +63,27 @@
             </div>
 
             <div class="mb-4">
-                <label for="participation_coverage" class="block text-gray-700 font-semibold">Cakupan
-                    Partisipasi</label>
-                <input type="text" name="participation_coverage" id="participation_coverage"
-                    value="{{ $workProgram->participation_coverage }}"
+                <label for="participation_coverage" class="block text-gray-700 font-semibold">
+                    Cakupan Partisipasi
+                </label>
+
+                <select name="participation_coverage" id="participation_coverage"
                     class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <option value="Prodi" {{ $workProgram->participation_coverage == 'Prodi' ? 'selected' : '' }}>
+                        Prodi</option>
+                    <option value="Sekolah" {{ $workProgram->participation_coverage == 'Sekolah' ? 'selected' : '' }}>
+                        Sekolah</option>
+                    <option value="IPB" {{ $workProgram->participation_coverage == 'IPB' ? 'selected' : '' }}>IPB
+                    </option>
+                    <option value="Nasional"
+                        {{ $workProgram->participation_coverage == 'Nasional' ? 'selected' : '' }}>Nasional</option>
+                    <option value="Internasional"
+                        {{ $workProgram->participation_coverage == 'Internasional' ? 'selected' : '' }}>Internasional
+                    </option>
+                </select>
             </div>
+
+
 
             <div class="flex space-x-2">
                 <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
@@ -95,7 +110,7 @@
         }
 
         function unformatCurrency(value) {
-            return value.replace(/\./g, ""); 
+            return value.replace(/\./g, "");
         }
 
         displayInput.addEventListener("input", function(e) {
