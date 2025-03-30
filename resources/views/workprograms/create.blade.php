@@ -56,6 +56,7 @@
                     'participation_total' => 'Total Partisipasi',
                     'participation_coverage' => 'Cakupan Partisipasi',
                     'lpj_url' => 'Upload LPJ (pdf, max: 5 MB)',
+                    'spg_url' => 'Upload SPG (pdf, max: 5 MB)'
                 ];
             @endphp
 
@@ -107,6 +108,11 @@
                     @elseif($field === 'lpj_url')
                         <div class="mb-4">
                             <input type="file" name="lpj_url" id="lpj_url" accept="application/pdf"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    @elseif($field === 'spg_url')
+                        <div class="mb-4">
+                            <input type="file" name="spg_url" id="spg_url" accept="application/pdf"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
                         </div>
                     @else

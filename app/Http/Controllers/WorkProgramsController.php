@@ -59,7 +59,8 @@ class WorkProgramsController extends Controller
             'sources_of_funds.*' => 'string|max:255',
             'participation_total' => 'required|integer|min:0',
             'participation_coverage' => 'required|string|max:255',
-            'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120'
+            'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120',
+            'spg_url' => 'sometimes|nullable|mimes:pdf|max:5120'
         ]);
 
         DB::beginTransaction();
@@ -70,6 +71,13 @@ class WorkProgramsController extends Controller
                 $lpjPath = $request->file('lpj_url')->storeAs('private', $generatedFilename, 'private');
                 $validated['lpj_url'] = $lpjPath;
             }
+
+            if ($request->hasFile('spg_url')) {
+                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $request->file('spg_url')->getClientOriginalName());
+                $spgPath = $request->file('spg_url')->storeAs('private', $generatedFilename, 'private');
+                $validated['spg_url'] = $spgPath;
+            }
+
             $validated['sources_of_funds'] = json_encode($validated['sources_of_funds']);
             $validated['department_id'] = Auth::user()->department->id;
 
@@ -112,7 +120,8 @@ class WorkProgramsController extends Controller
             'sources_of_funds.*' => 'string|max:255',
             'participation_total' => 'required|integer|min:0',
             'participation_coverage' => 'required|string|max:255',
-            'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120'
+            'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120',
+            'spg_url' => 'sometimes|nullable|mimes:pdf|max:5120'
         ]);
 
         DB::beginTransaction();
@@ -132,6 +141,22 @@ class WorkProgramsController extends Controller
                 $validated['lpj_url'] = $newFile->storeAs('private', $generatedFilename, 'private');
             } else {
                 $validated['lpj_url'] = $workProgram->lpj_url;
+            }
+
+            if ($request->hasFile('spg_url')) {
+                $newFile = $request->file('spg_url');
+                $oldFile = $workProgram->spg_url;
+
+                if ($oldFile && Storage::disk('private')->exists($oldFile)) {
+                    if (md5_file($newFile->path()) !== md5_file(Storage::disk('private')->path($oldFile))) {
+                        Storage::disk('private')->delete($oldFile);
+                    }
+                }
+
+                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $newFile->getClientOriginalName());
+                $validated['spg_url'] = $newFile->storeAs('private', $generatedFilename, 'private');
+            } else {
+                $validated['spg_url'] = $workProgram->spg_url;
             }
 
 

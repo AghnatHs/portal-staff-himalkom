@@ -138,7 +138,24 @@
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
             </div>
 
+            <div class="mb-4">
+                <label for="spg_url" class="block font-semibold text-gray-700">Upload SPG (pdf, max: 5 MB)</label>
+                @if ($workProgram->spg_url)
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600">File SPG:</p>
+                        <p class="text-xs text-gray-800">{{ explode('/', $workProgram->spg_url)[1] }}</p>
+                        <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
+                            tidak ingin mengubah file</p>
+                    </div>
+                @else
+                    <div class="bg-red-200 p-4 mb-2 rounded-lg">
+                        <p class="text-gray-800">File SPG belum diunggah, silahkan unggah disini</p>
+                    </div>
+                @endif
 
+                <input type="file" name="spg_url" id="spg_url" accept="application/pdf"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
+            </div>
 
             <div class="flex space-x-2">
                 <button type="submit"
