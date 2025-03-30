@@ -44,8 +44,15 @@
                     <p class="text-gray-600 text-sm mb-4">{{ Str::limit($workProgram->description, 100, '...') }}</p>
 
                     <div class="mt-auto">
+                        @php
+                            $diffInDays = \Carbon\Carbon::parse($workProgram->start_at)->diffInDays(
+                                \Carbon\Carbon::parse($workProgram->finished_at),
+                            );
+                        @endphp
                         <p class="text-gray-500 text-sm mb-4">{{ date('d M Y', strtotime($workProgram->start_at)) }} -
                             {{ date('d M Y', strtotime($workProgram->finished_at)) }}
+                            ({{ $diffInDays }}
+                            Days)
                         </p>
                         <p class="text-gray-500 text-sm mb-4">
                             Last updated : {{ \Carbon\Carbon::parse($workProgram->created_at)->diffForHumans() }}
