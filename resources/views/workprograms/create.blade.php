@@ -70,7 +70,7 @@
                     @elseif($field === 'funds')
                         <input type="text" id="funds_display" value="{{ number_format(0, 0, ',', '.') }}"
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <input type="hidden" name="funds" id="funds">
+                        <input type="hidden" name="funds" id="funds" value="{{ old('funds', 0) }}">
                     @elseif($field === 'participation_coverage')
                         <select name="participation_coverage" id="participation_coverage"
                             class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
