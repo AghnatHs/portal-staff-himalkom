@@ -29,7 +29,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\Department $department
+ * @property-read Department $department
+ * @property-read mixed $timeline_range_text
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram onlyTrashed()
