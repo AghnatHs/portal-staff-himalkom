@@ -25,6 +25,6 @@ class DashboardController extends Controller
 
     public function showSupervisor(): View
     {
-        return view('dashboard_spv');
+        return view('dashboard-spv');
     }
 }
