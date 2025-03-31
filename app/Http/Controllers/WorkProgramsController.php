@@ -22,7 +22,7 @@ class WorkProgramsController extends Controller
             abort(403, 'Anda tidak memiliki izin untuk melihat program dari departemen ini.');
         }
 
-        return view('workprograms.index', ['department' => $department]);
+        return view('dashboard.workprograms.index', ['department' => $department]);
     }
 
     public function detail(Department $department, WorkProgram $workProgram): View
@@ -31,7 +31,7 @@ class WorkProgramsController extends Controller
             abort(403, 'Anda tidak memiliki izin untuk melihat program dari departemen ini.');
         }
 
-        return view('workprograms.detail', ['workProgram' => $workProgram]);
+        return view('dashboard.workprograms.detail', ['workProgram' => $workProgram]);
     }
 
     public function create(Department $department): View
@@ -40,7 +40,7 @@ class WorkProgramsController extends Controller
             abort(403, 'Anda tidak memiliki izin untuk menambah program untuk departemen ini.');
         }
 
-        return view('workprograms.create', ['department' => $department]);
+        return view('dashboard.workprograms.create', ['department' => $department]);
     }
 
     public function store(Request $request, Department $department)
@@ -100,7 +100,7 @@ class WorkProgramsController extends Controller
             abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
         }
 
-        return view('workprograms.edit', ['workProgram' => $workProgram]);
+        return view('dashboard.workprograms.edit', ['workProgram' => $workProgram]);
     }
 
 
