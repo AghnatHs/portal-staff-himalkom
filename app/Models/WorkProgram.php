@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use App\Models\Department;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * 
@@ -75,15 +77,37 @@ class WorkProgram extends Model
     {
         return $this->belongsTo(Department::class);
     }
-    
-    protected static function boot(){
-        
+
+    // example output: 29 Mar 2025 - 31 Mar 2025 (2 Days)
+    public function getTimelineRangeTextAttribute()
+    {
+        $start = Carbon::parse($this->start_at);
+        $end = Carbon::parse($this->finished_at);
+
+        $years = $start->diffInYears($end);
+        $months = $start->copy()->addYears($years)->diffInMonths($end);
+        $days = $start->copy()->addYears($years)->addMonths($months)->diffInDays($end);
+
+        $years = floor($years);
+        $months = floor($months);
+        $days = floor($days);
+
+        $parts = [];
+        if ($years > 0) $parts[] = "$years year" . ($years > 1 ? "s" : "");
+        if ($months > 0) $parts[] = "$months month" . ($months > 1 ? "s" : "");
+        if ($days > 0) $parts[] = "$days day" . ($days > 1 ? "s" : "");
+
+        return date('d M Y', strtotime($this->start_at)) . '-' . date('d M Y', strtotime($this->finished_at)) . ' (' . implode(" ", $parts) . ')';
+    }
+
+    protected static function boot()
+    {
+
         parent::boot();
-        static::creating(function($model){
-            if(!$model->id){
+        static::creating(function ($model) {
+            if (!$model->id) {
                 $model->id = Str::ulid()->toBase32();
             }
         });
-
     }
 }

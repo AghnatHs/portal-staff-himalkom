@@ -38,8 +38,7 @@
 
             <div class="bg-gray-100 p-4 rounded-lg">
                 <p class="text-sm text-gray-600">Periode:</p>
-                <p class="text-gray-800">{{ date('d M Y', strtotime($workProgram->start_at)) }} -
-                    {{ date('d M Y', strtotime($workProgram->finished_at)) }}</p>
+                <p class="text-gray-800">{{ $workProgram->timeline_range_text }}</p>
             </div>
 
             <div class="bg-gray-100 p-4 rounded-lg">

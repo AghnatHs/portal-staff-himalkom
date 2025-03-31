@@ -49,10 +49,7 @@
                                 \Carbon\Carbon::parse($workProgram->finished_at),
                             );
                         @endphp
-                        <p class="text-gray-500 text-sm mb-4">{{ date('d M Y', strtotime($workProgram->start_at)) }} -
-                            {{ date('d M Y', strtotime($workProgram->finished_at)) }}
-                            ({{ $diffInDays }}
-                            Days)
+                        <p class="text-gray-500 text-sm mb-4">{{ $workProgram->timeline_range_text }}
                         </p>
                         <p class="text-gray-500 text-sm mb-4">
                             Last updated : {{ \Carbon\Carbon::parse($workProgram->created_at)->diffForHumans() }}
