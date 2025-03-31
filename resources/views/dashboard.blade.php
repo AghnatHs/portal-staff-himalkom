@@ -17,21 +17,20 @@
 
                 @hasrole('managing director')
                     <div class="p-6 text-gray-900 text-xl">
-                        You Are {{ Auth::user()->pluckRoleName('managing director') }} of {{ Auth::user()->department->name }}
+                        You Are {{ Auth::user()->pluckRoleName('managing director') }} of
+                        {{ Auth::user()->department->name }}
                     </div>
                 @else
                 @endhasrole
 
                 @hasrole('bph')
                     <div class="p-6 text-gray-900 text-xl">
-                        >> You Are seeing this cuz you are bph (taroh list dept disini) <<
-                    </div>
-                @else
-                    <div class="p-6 text-gray-900 text-xl">
-                        >>You Are seeing this cuz you ain't bph cuh <<
-                    </div>
-                @endhasrole
+                        >> You Are seeing this cuz you are bph (taroh list dept disini) << </div>
+                        @else
+                            <div class="p-6 text-gray-900 text-xl">
+                                >>You Are seeing this cuz you ain't bph cuh << </div>
+                                @endhasrole
+                        </div>
+                </div>
             </div>
-        </div>
-    </div>
 </x-app-layout>

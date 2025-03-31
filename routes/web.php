@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WorkProgramsController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,41 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:managing director|bph')
         ->name('dashboard');
 });
+
+// Work Programs
+Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
+    Route::get('/', [WorkProgramsController::class, 'index'])
+        ->middleware('role:managing director')
+        ->name('workProgram.index');
+
+    Route::get('/create', [WorkProgramsController::class, 'create'])
+        ->middleware('role:managing director')
+        ->name('workProgram.create');
+
+    Route::get('/{workProgram}', [WorkProgramsController::class, 'detail'])
+        ->middleware('role:managing director')
+        ->name('workProgram.detail');
+
+    Route::get('/{workProgram}/edit', [WorkProgramsController::class, 'edit'])
+        ->middleware('role:managing director')
+        ->name('workProgram.edit');
+
+    Route::post('/', [WorkProgramsController::class, 'store'])
+        ->middleware('role:managing director')
+        ->name('workProgram.store');
+
+    Route::put('/{workProgram}', [WorkProgramsController::class, 'update'])
+        ->middleware('role:managing director')
+        ->name('workProgram.update');
+
+    Route::delete('/{workProgram}', [WorkProgramsController::class, 'destroy'])
+        ->middleware('role:managing director')
+        ->name('workProgram.destroy');
+});
+
+// Serving Private pdfs
+Route::get('/pdf/{filename}', [PDFController::class, 'showPrivatePdf'])
+    ->name('pdf.show');
 
 // Department view (access only by managing director of dept, bph, or supervisor)
 // TODO: Refactor this code
