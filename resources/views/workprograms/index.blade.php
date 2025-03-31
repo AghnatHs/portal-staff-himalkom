@@ -40,7 +40,8 @@
             @forelse ($department->workPrograms as $workProgram)
                 <div
                     class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition flex flex-col">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $workProgram->name }}</h2>
+                    <h2 class="text-xl font-semibold text-gray-900">{{ $workProgram->name }}</h2>
+                    <p class="text-xs mb-2">id: {{ $workProgram->id }}</p>
                     <p class="text-gray-600 text-sm mb-4">{{ Str::limit($workProgram->description, 100, '...') }}</p>
 
                     <div class="mt-auto">

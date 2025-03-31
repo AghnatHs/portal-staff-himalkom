@@ -6,7 +6,8 @@
     </x-slot>
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
 
-        <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ $workProgram->name }}</h1>
+        <h1 class="text-3xl font-bold text-gray-800 mb-0">{{ $workProgram->name }}</h1>
+        <p class="text-xs">id: {{ $workProgram->id }}</p>
 
         <script>
             @if ($message = session('success'))
