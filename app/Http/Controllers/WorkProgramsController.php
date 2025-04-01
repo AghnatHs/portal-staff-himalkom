@@ -19,7 +19,7 @@ class WorkProgramsController extends Controller
     public function index(Department $department): View
     {
         if (Auth::user()->department_id !== $department->id) {
-            abort(403, 'Anda tidak memiliki izin untuk melihat program dari departemen ini.');
+            abort(403, 'Unauthorized Access of Department.');
         }
 
         return view('dashboard.workprograms.index', ['department' => $department]);
@@ -28,7 +28,7 @@ class WorkProgramsController extends Controller
     public function detail(Department $department, WorkProgram $workProgram): View
     {
         if (Auth::user()->department_id !== $department->id) {
-            abort(403, 'Anda tidak memiliki izin untuk melihat program dari departemen ini.');
+            abort(403, 'Unauthorized Access of Department WorkProgram.');
         }
 
         return view('dashboard.workprograms.detail', ['workProgram' => $workProgram]);
@@ -37,7 +37,7 @@ class WorkProgramsController extends Controller
     public function create(Department $department): View
     {
         if (Auth::user()->department_id !== $department->id) {
-            abort(403, 'Anda tidak memiliki izin untuk menambah program untuk departemen ini.');
+            abort(403, 'Unauthorized Access of Department WorkProgram Action.');
         }
 
         return view('dashboard.workprograms.create', ['department' => $department]);
@@ -46,7 +46,7 @@ class WorkProgramsController extends Controller
     public function store(Request $request, Department $department)
     {
         if (Auth::user()->department_id !== $department->id) {
-            abort(403, 'Anda tidak memiliki izin untuk menambah program untuk departemen ini.');
+            abort(403, 'Unauthorized Access of Department WorkProgram Action.');
         }
 
         $validated = $request->validate([
@@ -97,7 +97,7 @@ class WorkProgramsController extends Controller
     public function edit(Department $department, WorkProgram $workProgram)
     {
         if (Auth::user()->department_id !== $workProgram->department_id) {
-            abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
+            abort(403, 'Unauthorized Access of Department WorkProgram Action.');
         }
 
         return view('dashboard.workprograms.edit', ['workProgram' => $workProgram]);
@@ -107,7 +107,7 @@ class WorkProgramsController extends Controller
     public function update(Request $request, Department $department, WorkProgram $workProgram)
     {
         if (Auth::user()->department_id !== $workProgram->department_id) {
-            abort(403, 'Anda tidak memiliki izin untuk mengubah program ini.');
+            abort(403, 'Unauthorized Access of Department WorkProgram Action.');
         }
 
         $validated = $request->validate([
@@ -177,7 +177,7 @@ class WorkProgramsController extends Controller
     public function destroy(Department $department, WorkProgram $workProgram)
     {
         if (Auth::user()->department_id !== $workProgram->department_id) {
-            abort(403, 'Anda tidak memiliki izin untuk menghapus program ini.');
+            abort(403, 'Unauthorized Access of Department WorkProgram Action.');
         }
 
         try {
