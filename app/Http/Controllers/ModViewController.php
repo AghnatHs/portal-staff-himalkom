@@ -12,7 +12,8 @@ class ModViewController extends Controller
         $departments = Department::select('id', 'name', 'description', 'slug')
             ->withCount(['workPrograms'])
             ->orderBy('name', 'ASC')
-            ->get();
+            ->get()
+            ->append('managing_director');
         return view('dashboard.modview.index-department', [
             'departments' => $departments
         ]);

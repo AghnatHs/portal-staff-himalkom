@@ -9,9 +9,15 @@
             <div
                 class="bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-xl transition flex flex-col 
                w-[350px] sm:w-[380px] md:w-[400px] lg:w-2/4">
-                <h2 class="text-xl font-semibold text-gray-900">{{ $department->name }}</h2>
-                <p class="text-gray-600 text-sm mb-4">Total Program Kerja :{{ $department->work_programs_count }}</p>
-
+                <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $department->name }}</h2>
+                @if ($department->managing_director)
+                    <p class="text-gray-600 text-sm mb-1">Managing Director : {{ $department->managing_director->name }}
+                        | {{ $department->managing_director->email }}</p>
+                @else
+                    <p class="text-gray-600 text-sm mb-1">Managing Director : - </p>
+                @endif
+                <p class="text-gray-600 text-sm mb-4">Total Program Kerja : {{ $department->work_programs_count }}
+                </p>
                 <div class="mt-auto">
                     <a href="{{ route('dashboard.modview.department.show', ['department' => $department]) }}"
                         class="inline-block text-blue-600 font-semibold hover:underline">
