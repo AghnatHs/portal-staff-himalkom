@@ -47,6 +47,7 @@ class DepartmentResource extends Resource
                     ->description(fn(Department $record): string => $record->abbreviation)
                     ->wrap(),
                 TextColumn::make('description')->limit(50)->wrap(),
+                TextColumn::make('slug'),
                 TextColumn::make('users')
                     ->label('Managing Director')
                     ->placeholder('Null')
