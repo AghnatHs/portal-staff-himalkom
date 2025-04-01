@@ -76,9 +76,7 @@ class Department extends Model
         });
 
         static::updating(function ($model) {
-            if (!$model->slug) {
-                $model->slug = Str::slug($model->name);
-            }
+            $model->slug = Str::slug($model->name);
         });
     }
 }
