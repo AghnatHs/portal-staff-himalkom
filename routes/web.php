@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WorkProgramsController;
-use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\ModViewController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -57,7 +57,21 @@ Route::get('/pdf/{filename}', [PDFController::class, 'showPrivatePdf'])
     ->name('pdf.show');
 
 // Department view (access only by managing director of dept, bph, or supervisor)
-// TODO: Refactor this code
+Route::middleware('auth')
+    ->prefix('/dashboard/mod-view')
+    ->name('dashboard.modview.')
+    ->group(function () {
+        Route::get('/departments', [ModViewController::class, 'index'])
+            ->middleware('role:bph|supervisor')
+            ->name('department.index');
+
+        Route::get('/{department:slug}', [ModViewController::class, 'showDepartment'])
+            ->middleware('role:bph|supervisor')
+            ->name('department.show');
+        /* - dashboard/overview/departments -> isinya href href ke departement
+        - dashboard/overview/{department} -> isinya index work programs
+        - dashboard/overview/{department}/{workprogram} -> isinya detail work programs */
+    });
 
 // Breeze profile
 Route::middleware('auth')->group(function () {
