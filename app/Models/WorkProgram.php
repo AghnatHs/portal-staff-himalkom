@@ -82,6 +82,10 @@ class WorkProgram extends Model
     // example output: 29 Mar 2025 - 31 Mar 2025 (2 Days)
     public function getTimelineRangeTextAttribute()
     {
+        if ($this->start_at == $this->finished_at) {
+            return date('D d M Y', strtotime($this->start_at)) . '-' . date('D d M Y', strtotime($this->finished_at)) . ' (' . "1 day" . ')';
+        }
+
         $start = Carbon::parse($this->start_at);
         $end = Carbon::parse($this->finished_at);
 
@@ -98,7 +102,7 @@ class WorkProgram extends Model
         if ($months > 0) $parts[] = "$months month" . ($months > 1 ? "s" : "");
         if ($days > 0) $parts[] = "$days day" . ($days > 1 ? "s" : "");
 
-        return date('d M Y', strtotime($this->start_at)) . '-' . date('d M Y', strtotime($this->finished_at)) . ' (' . implode(" ", $parts) . ')';
+        return date('D d M Y', strtotime($this->start_at)) . '-' . date('D d M Y', strtotime($this->finished_at)) . ' (' . implode(" ", $parts) . ')';
     }
 
     protected static function boot()
