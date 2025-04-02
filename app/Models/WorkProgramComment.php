@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 /**
  * 
@@ -25,14 +26,30 @@ class WorkProgramComment extends Model
     use HasUlids, SoftDeletes;
     public $incrementing = false;
     protected $keyType = 'string';
+    protected $fillable = [
+        'work_program_id',
+        'user_id',
+        'content',
+    ];
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function workProgram(): BelongsTo
     {
-        return $this->belongsTo(WorkProgram::class);
+        return $this->belongsTo(WorkProgram::class, 'work_program_id');
+    }
+
+    protected static function boot()
+    {
+
+        parent::boot();
+        static::creating(function ($model) {
+            if (!$model->id) {
+                $model->id = Str::ulid()->toBase32();
+            }
+        });
     }
 }
