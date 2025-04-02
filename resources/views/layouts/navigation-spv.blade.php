@@ -83,8 +83,15 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="Auth::user()->getDashboardRoute()" :active="request()->routeIs('dashboard.supervisor')">
-                {{ __('Dashboard') }}
+                Dashboard
             </x-responsive-nav-link>
+
+            @hasanyrole('supervisor')
+                <x-responsive-nav-link :href="route('dashboard.modview.department.index')" :active="request()->routeIs('dashboard.modview.*')">
+                    Supervisi (BPH / Supervisor)
+                </x-responsive-nav-link>
+            @else
+            @endhasanyrole
         </div>
 
         <!-- Responsive Settings Options -->
@@ -96,7 +103,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    Profile
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -106,7 +113,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        Log Out
                     </x-responsive-nav-link>
                 </form>
             </div>
