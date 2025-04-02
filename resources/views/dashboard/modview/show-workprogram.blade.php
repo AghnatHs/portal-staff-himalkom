@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :navigation="Auth::user()->hasRole('supervisor') ? 'layouts.navigation_spv' : 'layouts.navigation'">
     <x-slot name="header">
         <div class="flex items-center gap-4">
             <a href="{{ route('dashboard.modview.department.show', ['department' => $workProgram->department]) }}"
