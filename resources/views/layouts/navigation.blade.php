@@ -20,6 +20,13 @@
                         Program Kerja
                     </x-nav-link>
 
+                    @hasanyrole('bph|supervisor')
+                        <x-nav-link :href="route('dashboard.modview.department.index')" :active="request()->routeIs('dashboard.modview.*')">
+                            Supervisi (BPH / Supervisor)
+                        </x-nav-link>
+                    @else
+                    @endhasanyrole
+
                 </div>
             </div>
 

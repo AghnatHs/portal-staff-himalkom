@@ -15,6 +15,13 @@
                     <x-nav-link :href="Auth::user()->getDashboardRoute()" :active="request()->routeIs('dashboard.supervisor')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    @hasanyrole('supervisor')
+                        <x-nav-link :href="route('dashboard.modview.department.index')" :active="request()->routeIs('dashboard.modview.*')">
+                            Supervisi (BPH / Supervisor)
+                        </x-nav-link>
+                    @else
+                    @endhasanyrole
                 </div>
             </div>
 
