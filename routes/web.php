@@ -68,9 +68,10 @@ Route::middleware('auth')
         Route::get('/{department:slug}', [ModViewController::class, 'showDepartment'])
             ->middleware('role:bph|supervisor')
             ->name('department.show');
-        /* - dashboard/overview/departments -> isinya href href ke departement
-        - dashboard/overview/{department} -> isinya index work programs
-        - dashboard/overview/{department}/{workprogram} -> isinya detail work programs */
+
+        Route::get('/{department:slug}/workprograms/{workProgram}', [ModViewController::class, 'showWorkProgram'])
+            ->middleware('role:bph|supervisor')
+            ->name('workprogram.show');
     });
 
 // Breeze profile

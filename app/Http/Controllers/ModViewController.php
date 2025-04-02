@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\WorkProgram;
 use Illuminate\Http\Request;
 
 class ModViewController extends Controller
@@ -22,8 +23,16 @@ class ModViewController extends Controller
     public function showDepartment(Department $department)
     {
         $department->load(['workPrograms']);
+        $department->append('managing_director');
         return view('dashboard.modview.show-department', [
             'department' => $department
+        ]);
+    }
+
+    public function showWorkProgram(Department $department, WorkProgram $workProgram)
+    {
+        return view('dashboard.modview.show-workprogram', [
+            'workProgram' => $workProgram
         ]);
     }
 }
