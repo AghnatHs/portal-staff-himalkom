@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -96,6 +97,11 @@ class User extends Authenticatable implements FilamentUser
         } else { // supervisor
             return route('dashboard.supervisor');
         }
+    }
+
+    public function workProgramComments(): HasMany
+    {
+        return $this->hasMany(WorkProgramComment::class);
     }
 
     public function department(): BelongsTo

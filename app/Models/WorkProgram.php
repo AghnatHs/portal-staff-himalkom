@@ -74,6 +74,11 @@ class WorkProgram extends Model
         'spg_url'
     ];
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(WorkProgramComment::class);
+    }
+
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
