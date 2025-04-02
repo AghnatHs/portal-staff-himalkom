@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkProgramComment> $comments
+ * @property-read int|null $comments_count
  * @property-read Department $department
  * @property-read mixed $timeline_range_text
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram newModelQuery()
