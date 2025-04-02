@@ -26,10 +26,10 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
-
-        $user = Auth::user();
+        $user = Auth::user()->fresh();
         $userRole = $user->pluckRoleNames();
+
+        $request->session()->regenerate();
 
         if ($userRole->contains("managing director") || $userRole->contains("bph")) {
             return redirect()->route('dashboard', ['department' => $user->department]);
