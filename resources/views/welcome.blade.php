@@ -35,9 +35,19 @@
                             @auth
                                 <div class="flex flex-col justify-center items-center text-center space-y-2">
                                     <p class="text-white">Hallo, {{ Auth::user()->name }} !</p>
-                                    <a href="{{ Auth::user()->getDashboardRoute() }}"
-                                        class="font-[1000] rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 hover:scale-125 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                                        Dashboard
+                                    @php
+                                        $dashboardUrl = Auth::user()->getDashboardRoute();
+                                        $linkText = auth()
+                                            ->user()
+                                            ->hasAnyRole(['managing director', 'bph', 'supervisor'])
+                                            ? 'Dashboard'
+                                            : '-';
+                                    @endphp
+                                    <a href="{{ $dashboardUrl }}"
+                                        class="font-[1000] rounded-md px-3 py-2 text-black ring-1 ring-transparent transition 
+                                           hover:text-black/70 hover:scale-125 focus:outline-none focus-visible:ring-[#FF2D20] 
+                                           dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                                        {{ $linkText }}
                                     </a>
                                 </div>
                                 <form method="POST" action="{{ route('logout') }}">

@@ -26,15 +26,15 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
-
-        $user = Auth::user();
+        $user = Auth::user()->fresh();
         $userRole = $user->pluckRoleNames();
 
+        $request->session()->regenerate();
+
         if ($userRole->contains("managing director") || $userRole->contains("bph")) {
-            return redirect()->route('dashboard', ['department' => $user->department]);
+            return redirect()->intended(route('dashboard', ['department' => $user->department], absolute: false));
         } else if ($userRole->contains("supervisor")) {
-            return redirect()->route('dashboard.supervisor');
+            return redirect()->intended(route('dashboard.supervisor', absolute: false));
         } else {
             return redirect()->intended();
         }
