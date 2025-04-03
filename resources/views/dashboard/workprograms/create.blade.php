@@ -14,11 +14,13 @@
         </div>
 
     </x-slot>
-    <div class="relative max-w-[90dvw] lg:max-w-6xl mx-auto mt-2 mb-8 p-2 bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-lg 
+    <div
+        class="relative max-w-[90dvw] lg:max-w-6xl mx-auto mt-2 mb-8 p-2 bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-lg 
             before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-r before:from-gray-200 before:to-gray-100 
             before:rounded-[inherit] before:p-[0.5px]">
-    <div class="bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-6 border border-gray-200">
-            <h1 class="font-extrabold text-gray-900 md:mb-2 text-center text-lg md:text-xl lg:text-3xl">Tambah Program Kerja - {{ $department->name }}
+        <div class="bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-6 border border-gray-200">
+            <h1 class="font-extrabold text-gray-900 md:mb-2 text-center text-lg md:text-xl lg:text-3xl">Tambah Program
+                Kerja - {{ $department->name }}
             </h1>
 
             @if ($errors->any())
@@ -87,12 +89,16 @@
                             <input type="hidden" name="funds" id="funds" value="{{ old('funds', 0) }}">
                         @elseif($field === 'participation_coverage')
                             <select name="participation_coverage" id="participation_coverage"
-                                class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
-                                <option value="Prodi">Prodi</option>
-                                <option value="Sekolah">Sekolah</option>
-                                <option value="IPB">IPB</option>
-                                <option value="Nasional">Nasional</option>
-                                <option value="Internasional">Internasional</option>
+                                class="select2 bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
+                                <option value="Prodi" class="text-gray-700  text-sm md:text-md lg:text-lg">Prodi
+                                </option>
+                                <option value="Sekolah" class="text-gray-700  text-sm md:text-md lg:text-lg">Sekolah
+                                </option>
+                                <option value="IPB" class="text-gray-700  text-sm md:text-md lg:text-lg">IPB</option>
+                                <option value="Nasional" class="text-gray-700  text-sm md:text-md lg:text-lg">Nasional
+                                </option>
+                                <option value="Internasional" class="text-gray-700  text-sm md:text-md lg:text-lg">
+                                    Internasional</option>
                             </select>
                         @elseif($field === 'sources_of_funds')
                             <div class="mb-4">
@@ -173,9 +179,11 @@
             hiddenInput.value = unformatCurrency(rawValue);
         });
     });
-</script>
 
-<script>
+    $(document).ready(function() {
+        $('#participation_coverage').select2();
+    });
+
     FilePond.create(document.getElementById('lpj_filepond'), {
         allowMultiple: false,
         acceptedFileTypes: ['application/pdf'],

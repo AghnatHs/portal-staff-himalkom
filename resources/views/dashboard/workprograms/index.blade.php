@@ -44,7 +44,7 @@
                 
                 <div class="my-1 md:my-2">
                     <h3 class="text-sm font-semibold text-gray-700">Description</h3>
-                    <p class="text-gray-600 text-sm my-1 md:my-2">{{ Str::limit($workProgram->description, 100, '...') }}</p>
+                    <p class="text-gray-600 text-sm my-1 md:my-2 break-words">{{ Str::limit($workProgram->description, 100, '...') }}</p>
                     <hr class="border-t border-gray-200 my-2">
                 </div>
                 
