@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Str;
 
 /**
  * 
@@ -40,6 +41,11 @@ class WorkProgramComment extends Model
     public function workProgram(): BelongsTo
     {
         return $this->belongsTo(WorkProgram::class, 'work_program_id');
+    }
+
+    protected function createdAt(): Attribute
+    {
+        return Attribute::get(fn($value) => \Carbon\Carbon::parse($value)->format('d M Y H:i'));
     }
 
     protected static function boot()
