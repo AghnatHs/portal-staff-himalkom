@@ -102,8 +102,10 @@
                     @foreach ($workProgram->comments as $comment)
                         <li class="border rounded-lg p-4 flex justify-between items-center bg-gray-50">
                             <div>
-                                <div class="trix-content text-gray-700">{!! $comment->content !!}</div>
-                                <small class="text-gray-500">{{ $comment->author->name }}</small>
+                                <small class="text-gray-500 block">{{ $comment->author->name }} -
+                                    {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</small>
+                                <div class="trix-content text-gray-700 mb-2">{!! $comment->content !!}</div>
+                                <small class="text-gray-400 block">{{ $comment->created_at }}</small>
                             </div>
                             @if (Auth::user()->id === $comment->user_id)
                                 <form method="POST"
