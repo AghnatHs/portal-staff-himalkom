@@ -28,13 +28,14 @@
 
 </head>
 
-<body class="font-sans antialiased ">
-    <div class="min-h-screen bg-gray-50/70">
-        @include($navigation)
+<body class="font-sans antialiased">
+    @include($navigation)
+
+    <div class="min-h-screen flex flex-col bg-cover bg-center bg-no-repeat min-h-[92dvh]"
+        style="background-image: url('{{ asset('images/bg4.jpg') }}');">
 
         <!-- Page Heading -->
-        <div class="bg-cover bg-center bg-no-repeat" style="background-image: url('{{ asset('images/bg4.jpg') }}');">
-        
+        <div class="flex-grow ">
             @isset($header)
                 <header class="">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -44,14 +45,14 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-grow">
                 {{ $slot }}
             </main>
-
-            @include('components.footer')
         </div>
 
+        @include('components.footer')
     </div>
 </body>
+
 
 </html>
