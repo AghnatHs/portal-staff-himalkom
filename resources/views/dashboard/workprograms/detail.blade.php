@@ -95,20 +95,19 @@
             </div>
         @endif
 
-        @if ($workProgram->comments)
+        @if ($workProgram->comments->isNotEmpty())
             <div class="mt-2 bg-white rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-4">Komentar</h3>
                 <ul class="space-y-4">
                     @foreach ($workProgram->comments as $comment)
                         <li class="border rounded-lg p-4 flex justify-between items-center bg-gray-50">
                             <div>
-                                <p class="text-gray-700">{!! $comment->content !!}</p>
+                                <div class="trix-content text-gray-700">{!! $comment->content !!}</div>
                                 <small class="text-gray-500">{{ $comment->author->name }}</small>
                             </div>
                             @if (Auth::user()->id === $comment->user_id)
                                 <form method="POST"
-                                    action="{{ route('dashboard.workProgram.comment.destroy', ['workProgram' => $workProgram, 'comment' => $comment]) }}"
-                                    >
+                                    action="{{ route('dashboard.workProgram.comment.destroy', ['workProgram' => $workProgram, 'comment' => $comment]) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
@@ -120,7 +119,8 @@
                 </ul>
             </div>
         @else
-            <div class="bg-gray-100 p-4 rounded-lg my-2 text-center">
+            <div class="bg-gray-50 p-4 rounded-lg my-2">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Komentar</h3>
                 <p class="text-gray-600">Belum ada komentar.</p>
             </div>
         @endif
@@ -131,7 +131,8 @@
             @csrf
 
             <input id="content" type="hidden" name="content">
-            <trix-editor input="content" class="w-full h-32 bg-gray-100 border rounded-lg p-2"></trix-editor>
+            <trix-editor input="content"
+                class="trix-content w-full h-32 bg-gray-100 border rounded-lg p-2"></trix-editor>
 
             <button type="submit"
                 class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
