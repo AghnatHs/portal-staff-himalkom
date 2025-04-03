@@ -104,5 +104,55 @@
             </div>
         @endif
 
+        @if ($workProgram->comments->isNotEmpty())
+            <div class="mt-2 bg-white rounded-lg p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Komentar</h3>
+                <ul class="space-y-4">
+                    @foreach ($workProgram->comments as $comment)
+                        <li class="border rounded-lg p-4 flex justify-between items-center bg-gray-50">
+                            <div>
+                                <small class="text-gray-500 block">{{ $comment->author->name }} -
+                                    {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</small>
+                                <div class="trix-content text-gray-700 mb-2">{!! $comment->content !!}</div>
+                                <small class="text-gray-400 block">{{ $comment->created_at }}</small>
+                            </div>
+                            @if (Auth::user()->id === $comment->user_id)
+                                <form method="POST"
+                                    action="{{ route('dashboard.workProgram.comment.destroy', ['workProgram' => $workProgram, 'comment' => $comment]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-red-500 text-sm hover:text-red-700">Hapus</button>
+                                </form>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @else
+            <div class="bg-gray-50 p-4 rounded-lg my-2">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Komentar</h3>
+                <p class="text-gray-600">Belum ada komentar.</p>
+            </div>
+        @endif
+
+        <form method="POST"
+            action="{{ route('dashboard.workProgram.comment.store', ['workProgram' => $workProgram]) }}"
+            class="mt-2 bg-white rounded-lg p-6">
+            @csrf
+
+            <input id="content" type="hidden" name="content">
+            <trix-editor input="content"
+                class="trix-content w-full h-32 bg-gray-100 border rounded-lg p-2"></trix-editor>
+
+            <button type="submit"
+                class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
+                Tambah Komentar
+            </button>
+        </form>
+
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
 </x-app-layout>

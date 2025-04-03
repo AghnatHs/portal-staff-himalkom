@@ -62,6 +62,8 @@
                     </div>
                 </div>
 
+                
+
             @empty
                 <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center items-center h-40">
                     <p class="text-gray-500 text-lg font-semibold">No data available.</p>

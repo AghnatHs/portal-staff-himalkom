@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WorkProgramsController;
+use App\Http\Controllers\WorkProgramsCommentController;
 use App\Http\Controllers\ModViewController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WorkProgramCommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -52,6 +54,17 @@ Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->
         ->name('workProgram.destroy');
 });
 
+//Comment Routes
+Route::middleware('auth')->group(function () {
+    Route::prefix('/dashboard/{workProgram}/comments')
+        ->middleware('role:managing director|bph|supervisor')
+        ->name('dashboard.workProgram.')
+        ->group(function () {
+            Route::post('/', [WorkProgramCommentController::class, 'store'])->name('comment.store');
+            Route::delete('/{comment}', [WorkProgramCommentController::class, 'destroy'])->name('comment.destroy');
+        });
+});
+
 // Serving Private pdfs
 Route::get('/pdf/{filename}', [PDFController::class, 'showPrivatePdf'])
     ->name('pdf.show');
@@ -73,6 +86,8 @@ Route::middleware('auth')
             ->middleware('role:bph|supervisor')
             ->name('workprogram.show');
     });
+
+
 
 // Breeze profile
 Route::middleware('auth')->group(function () {
