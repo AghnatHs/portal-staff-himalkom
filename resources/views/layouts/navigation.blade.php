@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white shadow border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -16,7 +16,7 @@
                         Dashboard
                     </x-nav-link>
 
-                    <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
+                      <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
                         Program Kerja
                     </x-nav-link>
 
