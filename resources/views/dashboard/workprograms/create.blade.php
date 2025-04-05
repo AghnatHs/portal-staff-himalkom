@@ -127,12 +127,12 @@
                             </div>
                         @elseif($field === 'lpj_url')
                             <div class="mb-4">
-                                <input type="file" name="lpj_url" id="lpj_filepond" accept="application/pdf"
+                                <input type="file" name="lpj_url" id="lpj_url" accept="application/pdf"
                                     class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
                             </div>
                         @elseif($field === 'spg_url')
                             <div class="mb-4">
-                                <input type="file" name="spg_url" id="spg_filepond" accept="application/pdf"
+                                <input type="file" name="spg_url" id="spg_url" accept="application/pdf"
                                     class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
                             </div>
                         @else
@@ -183,17 +183,18 @@
     $(document).ready(function() {
         $('#participation_coverage').select2();
     });
-
-    FilePond.create(document.getElementById('lpj_filepond'), {
+    
+    FilePond.create(document.getElementById('lpj_url'), {
         allowMultiple: false,
         acceptedFileTypes: ['application/pdf'],
-        labelIdle: 'Drag & Drop file LPJ atau <span class="filepond--label-action text-[#14267B">Klik di sini</span>'
-
+        labelIdle: 'Drag & Drop file LPJ atau <span class="filepond--label-action text-[#14267B">Klik di sini</span>',
+        storeAsFile: true
     });
 
-    FilePond.create(document.getElementById('spg_filepond'), {
+    FilePond.create(document.getElementById('spg_url'), {
         allowMultiple: false,
         acceptedFileTypes: ['application/pdf'],
-        labelIdle: 'Drag & Drop file SPG atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        labelIdle: 'Drag & Drop file SPG atau <span class="filepond--label-action text-[#14267B">Klik di sini</span>',
+        storeAsFile: true
     });
 </script>
