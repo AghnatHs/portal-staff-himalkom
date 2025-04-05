@@ -6,27 +6,53 @@
     </x-slot>
     <div class="max-w-6xl mx-auto py-2 px-2">
 
-        <script>
-            @if ($message = session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sukses!',
-                    text: @json(session('success')),
-                    confirmButtonText: 'OK'
-                });
-            @endif
-        </script>
+        @php
+            $successData = session('success');
+        @endphp
 
-        <script>
-            @if ($message = session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: @json(session('error')),
-                    confirmButtonText: 'Coba Lagi'
-                });
-            @endif
-        </script>
+        @if ($successData)
+            <script>
+                const successId = sessionStorage.getItem('success_id');
+                const currentSuccessId = @json($successData['id']);
+
+                if (!successId || successId !== currentSuccessId) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses!',
+                        text: @json($successData['message']),
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        sessionStorage.setItem('success_id', currentSuccessId);
+                        fetch("{{ route('session.clear', 'success') }}");
+                    });
+                }
+            </script>
+        @endif
+
+
+        @php
+            $errorData = session('error');
+        @endphp
+
+        @if ($errorData)
+            <script>
+                const errorId = sessionStorage.getItem('error_id');
+                const currentErrorId = @json($errorData['id']);
+
+                if (!errorId || errorId !== currentErrorId) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: @json($errorData['message']),
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        sessionStorage.setItem('error_id', currentErrorId);
+                        fetch("{{ route('session.clear', 'error') }}");
+                    });
+                }
+            </script>
+        @endif
+
 
         <div class="flex justify-end mb-3">
             <a href="{{ route('dashboard.workProgram.create', ['department' => $department]) }}"
@@ -37,41 +63,44 @@
 
         <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
             @forelse ($department->workPrograms as $workProgram)
-            <div class="mx-2 lg:mx-0 bg-white shadow-md rounded-[10px] p-4 border border-gray-200 hover:shadow-lg transition flex flex-col">
-                <h2 class="uppercase text-lg md:text-xl font-bold text-gray-900">{{ $workProgram->name }}</h2>
-                <p class="text-[10px] mb-2">id: {{ $workProgram->id }}</p>
-                
-                <div class="my-1 md:my-2">
-                    <h3 class="text-sm font-semibold text-gray-700">Description</h3>
-                    <p class="text-gray-600 text-sm my-1 md:my-2 break-words">{{ Str::limit($workProgram->description, 100, '...') }}</p>
-                    <hr class="border-t border-gray-200 my-2">
-                </div>
-                
-                <div class="my-1 md:my-2">
-                    <h3 class="text-sm font-semibold text-gray-700">Timeline</h3>
-                    @php
-                        $diffInDays = \Carbon\Carbon::parse($workProgram->start_at)->diffInDays(
-                            \Carbon\Carbon::parse($workProgram->finished_at),
-                        );
-                    @endphp
-                    <p class="text-gray-500 text-[12px] my-1">{{ $workProgram->timeline_range_text }}</p>
-                    <hr class="border-t border-gray-200 my-2">
-                </div>
-            
-                <div class="my-1 md:my-2">
-                    <h3 class="text-sm font-semibold text-gray-700">Last Updated</h3>
-                    <p class="text-gray-500 text-[12px]">{{ \Carbon\Carbon::parse($workProgram->created_at)->diffForHumans() }}</p>
-                    <hr class="border-t border-gray-200 my-2">
+                <div
+                    class="mx-2 lg:mx-0 bg-white shadow-md rounded-[10px] p-4 border border-gray-200 hover:shadow-lg transition flex flex-col">
+                    <h2 class="uppercase text-lg md:text-xl font-bold text-gray-900">{{ $workProgram->name }}</h2>
+                    <p class="text-[10px] mb-2">id: {{ $workProgram->id }}</p>
+
+                    <div class="my-1 md:my-2">
+                        <h3 class="text-sm font-semibold text-gray-700">Description</h3>
+                        <p class="text-gray-600 text-sm my-1 md:my-2 break-words">
+                            {{ Str::limit($workProgram->description, 100, '...') }}</p>
+                        <hr class="border-t border-gray-200 my-2">
+                    </div>
+
+                    <div class="my-1 md:my-2">
+                        <h3 class="text-sm font-semibold text-gray-700">Timeline</h3>
+                        @php
+                            $diffInDays = \Carbon\Carbon::parse($workProgram->start_at)->diffInDays(
+                                \Carbon\Carbon::parse($workProgram->finished_at),
+                            );
+                        @endphp
+                        <p class="text-gray-500 text-[12px] my-1">{{ $workProgram->timeline_range_text }}</p>
+                        <hr class="border-t border-gray-200 my-2">
+                    </div>
+
+                    <div class="my-1 md:my-2">
+                        <h3 class="text-sm font-semibold text-gray-700">Last Updated</h3>
+                        <p class="text-gray-500 text-[12px]">
+                            {{ \Carbon\Carbon::parse($workProgram->created_at)->diffForHumans() }}</p>
+                        <hr class="border-t border-gray-200 my-2">
+                    </div>
+
+                    <div class="mt-1 md:mt-2">
+                        <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department]) }}"
+                            class="inline-block text-blue-500 text-xs font-semibold hover:underline">
+                            Read More →
+                        </a>
+                    </div>
                 </div>
 
-                <div class="mt-1 md:mt-2">
-                    <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department]) }}"
-                        class="inline-block text-blue-500 text-xs font-semibold hover:underline">
-                        Read More →
-                    </a>
-                </div>
-            </div>
-            
             @empty
                 <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-center items-center h-40">
                     <p class="text-gray-500 text-lg font-semibold">No data available.</p>

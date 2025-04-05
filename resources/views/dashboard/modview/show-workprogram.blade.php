@@ -18,27 +18,52 @@
         <h1 class="text-3xl font-bold text-gray-800 mb-0">{{ $workProgram->name }}</h1>
         <p class="text-xs"> Departemen: {{ $workProgram->department->name }}</p>
 
-        <script>
-            @if ($message = session()->pull('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sukses!',
-                    text: @json($message),
-                    confirmButtonText: 'OK'
-                });
-            @endif
-        </script>
+        @php
+            $successData = session('success');
+        @endphp
 
-        <script>
-            @if ($message = session()->pull('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: @json($message),
-                    confirmButtonText: 'Coba Lagi'
-                });
-            @endif
-        </script>
+        @if ($successData)
+            <script>
+                const successId = sessionStorage.getItem('success_id');
+                const currentSuccessId = @json($successData['id']);
+
+                if (!successId || successId !== currentSuccessId) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sukses!',
+                        text: @json($successData['message']),
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        sessionStorage.setItem('success_id', currentSuccessId);
+                        fetch("{{ route('session.clear', 'success') }}");
+                    });
+                }
+            </script>
+        @endif
+
+
+        @php
+            $errorData = session('error');
+        @endphp
+
+        @if ($errorData)
+            <script>
+                const errorId = sessionStorage.getItem('error_id');
+                const currentErrorId = @json($errorData['id']);
+
+                if (!errorId || errorId !== currentErrorId) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: @json($errorData['message']),
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        sessionStorage.setItem('error_id', currentErrorId);
+                        fetch("{{ route('session.clear', 'error') }}");
+                    });
+                }
+            </script>
+        @endif
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
             <div class="bg-gray-100 p-4 rounded-lg">
