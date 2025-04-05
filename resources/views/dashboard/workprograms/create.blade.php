@@ -1,18 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-row items-center">
-            <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}"
-                class="text-gray-900 hover:text-gray-800 transition">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l-7 7 7 7" />
-                </svg>
-            </a>
-            <h2 class="font-bold text-gray-900 leading-tight text-md md:text-lg lg:text-xl">
-                Program Kerja - {{ $department->name }}
-            </h2>
+            <div class="text-sm text-gray-500 font-medium">
+                <nav class="flex items-center space-x-2">
+                    <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}" class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                        Program Kerja
+                    </a>
+                    <span class="text-gray-400">/</span>
+                    <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}" class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                        {{ $department->name }}
+                    </a>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-800 font-semibold">
+                        Create
+                    </span>
+                </nav>
+            </div>
         </div>
-
     </x-slot>
     <div
         class="relative max-w-[90dvw] lg:max-w-6xl mx-auto mt-2 mb-8 p-2 bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-lg 

@@ -1,8 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Program Kerja - {{ $department->name }}
-        </h2>
+        <div class="flex flex-row items-center">
+            <div class="text-sm text-gray-500 font-medium">
+                <nav class="flex items-center space-x-2">
+                    <span >
+                        Program Kerja
+                    </span>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-800 font-semibold">
+                        {{ $department->name }}
+                    </span>
+                </nav>
+            </div>
+        </div>
     </x-slot>
     <div class="max-w-6xl mx-auto py-2 px-2">
 
