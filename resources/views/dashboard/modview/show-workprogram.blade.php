@@ -19,22 +19,22 @@
         <p class="text-xs"> Departemen: {{ $workProgram->department->name }}</p>
 
         <script>
-            @if ($message = session('success'))
+            @if ($message = session()->pull('success'))
                 Swal.fire({
                     icon: 'success',
                     title: 'Sukses!',
-                    text: @json(session('success')),
+                    text: @json($message),
                     confirmButtonText: 'OK'
                 });
             @endif
         </script>
 
         <script>
-            @if ($message = session('error'))
+            @if ($message = session()->pull('error'))
                 Swal.fire({
                     icon: 'error',
                     title: 'Gagal!',
-                    text: @json(session('error')),
+                    text: @json($message),
                     confirmButtonText: 'Coba Lagi'
                 });
             @endif

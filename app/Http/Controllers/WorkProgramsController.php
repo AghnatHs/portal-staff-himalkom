@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\View\View;
 use App\Models\Department;
-
 use App\Models\WorkProgram;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -85,12 +82,12 @@ class WorkProgramsController extends Controller
             DB::commit();
 
             return redirect()->route('dashboard.workProgram.index', ['department' => $department])
-                ->with('success', 'Program kerja berhasil ditambahkan!');
+                ->with('success', ['message' => 'Program kerja berhasil ditambahkan!', 'id' => Str::ulid()->toBase32()]);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('dashboard.workProgram.create', ['department' => $department])
                 ->withInput()
-                ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
+                ->with('error', ['message' => 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(), 'id' => Str::ulid()->toBase32()]);
         }
     }
 
@@ -165,11 +162,11 @@ class WorkProgramsController extends Controller
 
             DB::commit();
             return redirect()->route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department])
-                ->with('success', 'Program berhasil diperbarui.');
+                ->with('success', ['message' => 'Program kerja berhasil diperbarui!', 'id' => Str::ulid()->toBase32()]);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('dashboard.workProgram.edit', ['workProgram' => $workProgram, 'department' => $department])
-                ->with('error', 'Terjadi kesalahan saat menyimpan data: ' . $e->getMessage());
+                ->with('error', ['message' => 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage(), 'id' => Str::ulid()->toBase32()]);
         }
     }
 
@@ -183,11 +180,11 @@ class WorkProgramsController extends Controller
         try {
             $workProgram->delete();
             return redirect()->route('dashboard.workProgram.index', ['department' => $department])
-                ->with('success', 'Program berhasil dihapus.');
+                ->with('success', ['message' => 'Program kerja berhasil dihapus!', 'id' => Str::ulid()->toBase32()]);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('dashboard.workProgram.index', ['department' => $department])
-                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+                ->with('error', ['message' => 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage(), 'id' => Str::ulid()->toBase32()]);
         }
     }
 }

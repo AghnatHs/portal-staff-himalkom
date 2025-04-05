@@ -183,18 +183,18 @@
     $(document).ready(function() {
         $('#participation_coverage').select2();
     });
-    
+
     FilePond.create(document.getElementById('lpj_url'), {
         allowMultiple: false,
         acceptedFileTypes: ['application/pdf'],
-        labelIdle: 'Drag & Drop file LPJ atau <span class="filepond--label-action text-[#14267B">Klik di sini</span>',
+        labelIdle: 'Drag & Drop file LPJ atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
         storeAsFile: true
     });
 
     FilePond.create(document.getElementById('spg_url'), {
         allowMultiple: false,
         acceptedFileTypes: ['application/pdf'],
-        labelIdle: 'Drag & Drop file SPG atau <span class="filepond--label-action text-[#14267B">Klik di sini</span>',
+        labelIdle: 'Drag & Drop file SPG atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
         storeAsFile: true
     });
 </script>

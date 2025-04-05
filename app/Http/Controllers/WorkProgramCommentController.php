@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\WorkProgram;
 use App\Models\WorkProgramComment;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 
 class WorkProgramCommentController extends Controller
 {
@@ -26,10 +28,13 @@ class WorkProgramCommentController extends Controller
             ]);
             DB::commit();
 
-            return redirect()->back()->with('success', 'Comment added successfully.');
+
+
+            return redirect()->back()->with('success', ['message' => 'Komentar Berhasil Ditambahkan!', 'id' => Str::ulid()->toBase32()]);
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'There are problems when adding a comment: ' . $e->getMessage());
+            return redirect()->back()->with('error', ['message' => 'Terjadi kesalahan saat menambahkan komentar: ' . $e->getMessage(), 'id' => Str::ulid()->toBase32()]);
         }
     }
 
@@ -40,6 +45,6 @@ class WorkProgramCommentController extends Controller
         }
 
         $comment->delete();
-        return redirect()->back()->with('success', 'Comment deleted successfully.');
+        return redirect()->back()->with('success', ['message' => 'Komentar Berhasil Dihapus!', 'id' => Str::ulid()->toBase32()]);
     }
 }

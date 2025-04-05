@@ -17,7 +17,6 @@
             @endif
         </script>
 
-
         <script>
             @if ($message = session('error'))
                 Swal.fire({
