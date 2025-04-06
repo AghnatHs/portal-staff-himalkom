@@ -4,11 +4,13 @@
         <div class="flex flex-row items-center">
             <div class="text-sm text-gray-500 font-medium">
                 <nav class="flex items-center space-x-2">
-                    <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}" class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                    <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}"
+                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
                         Program Kerja
                     </a>
                     <span class="text-gray-400">/</span>
-                    <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}" class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                    <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}"
+                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
                         {{ $workProgram->department->name }}
                     </a>
                     <span class="text-gray-400">/</span>
@@ -25,52 +27,7 @@
             {{ $workProgram->name }}</h1>
 
 
-        @php
-            $successData = session('success');
-        @endphp
-
-        @if ($successData)
-            <script>
-                const successId = sessionStorage.getItem('success_id');
-                const currentSuccessId = @json($successData['id']);
-
-                if (!successId || successId !== currentSuccessId) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Sukses!',
-                        text: @json($successData['message']),
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        sessionStorage.setItem('success_id', currentSuccessId);
-                        fetch("{{ route('session.clear', 'success') }}");
-                    });
-                }
-            </script>
-        @endif
-
-
-        @php
-            $errorData = session('error');
-        @endphp
-
-        @if ($errorData)
-            <script>
-                const errorId = sessionStorage.getItem('error_id');
-                const currentErrorId = @json($errorData['id']);
-
-                if (!errorId || errorId !== currentErrorId) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal!',
-                        text: @json($errorData['message']),
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        sessionStorage.setItem('error_id', currentErrorId);
-                        fetch("{{ route('session.clear', 'error') }}");
-                    });
-                }
-            </script>
-        @endif
+        @include('components.swal-alert');
 
         @php
             $infoItems = [
@@ -199,7 +156,8 @@
 
         </div>
 
-        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mt-4 flex flex-col gap-2 md:flex-row md:justify-between">
+        <div
+            class="bg-white p-6 rounded-xl shadow-md border border-gray-200 mt-4 flex flex-col gap-2 md:flex-row md:justify-between">
 
             <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}"
                 class="px-4 py-2 bg-gray-300 text-[#111B5A] font-semibold rounded-lg shadow-sm hover:bg-gray-200 transition-all duration-200 flex items-center gap-1">
