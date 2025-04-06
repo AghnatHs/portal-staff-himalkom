@@ -70,7 +70,7 @@
                         </p>
                     </div>
 
-                    <div class="mt-2">
+                    <div class="mt-auto pt-2">
                         <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $department]) }}"
                             class="inline-flex items-center gap-1 text-white bg-[#111B5A] hover:bg-[#14267B] transition px-3 py-1.5 text-xs font-medium rounded-full">
                             Read More
