@@ -39,7 +39,7 @@
 
 
 
-        <div class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-4">
+        <div class="mx-2 lg:mx-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
             @forelse ($department->workPrograms as $workProgram)
                 <div
                     class="flex flex-col gap-1 lg:gap-3 relative mx-2 lg:mx-0 bg-white/90 border border-[#111B5A]/30 hover:border-[#14267B]/40 shadow-inner hover:shadow-md rounded-xl p-5 transition duration-200 transform backdrop-blur-sm">
@@ -48,7 +48,7 @@
                         ID: {{ $workProgram->id }}
                     </p>
 
-                    <h2 class="uppercase text-lg md:text-xl font-bold text-[#111B5A] tracking-wide">
+                    <h2 class="uppercase text-md md:text-xl font-bold text-[#111B5A] tracking-wide">
                         {{ $workProgram->name }}
                     </h2>
 
