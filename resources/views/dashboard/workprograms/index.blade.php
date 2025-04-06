@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex flex-row items-center">
-            <div class="text-sm text-gray-500 font-medium">
-                <nav class="flex items-center space-x-2">
+            <div class="text-[12px]  text-gray-500 font-medium md:text-sm">
+                <nav class="flex items-center space-x-1 md:space-x-2">
                     <span>
                         Program Kerja
                     </span>

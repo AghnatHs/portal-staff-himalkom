@@ -2,8 +2,8 @@
 
     <x-slot name="header">
         <div class="flex flex-row items-center">
-            <div class="text-sm text-gray-500 font-medium">
-                <nav class="flex items-center space-x-2">
+            <div class="text-[11px] text-gray-500 font-medium md:text-sm">
+                <nav class="flex items-center space-x-1 md:space-x-2">
                     <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}"
                         class="hover:underline hover:text-[#111B5A] cursor-pointer">
                         Program Kerja

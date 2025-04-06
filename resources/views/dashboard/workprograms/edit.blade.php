@@ -1,9 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Program Kerja - {{ $workProgram->department->name }} - "{{ $workProgram->name }}"
-        </h2>
+        <div class="flex flex-row items-center">
+            <div class="text-[11px] text-gray-500 font-medium md:text-sm">
+                <nav class="flex items-center space-x-1 md:space-x-2">
+                    <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}"
+                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                        Program Kerja
+                    </a>
+                    <span class="text-gray-400">/</span>
+                    <a href="{{ route('dashboard.workProgram.index', ['department' => $workProgram->department]) }}"
+                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                        {{ $workProgram->department->name }}
+                    </a>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-800 font-semibold">
+                        {{ $workProgram->name }}
+                    </span>
+                    <span class="text-gray-400">/</span>
+                    <span class="text-gray-800 font-semibold">
+                        Edit
+                    </span>
+                </nav>
+            </div>
+        </div>
     </x-slot>
+
     <div class="max-w-3xl my-2 mx-auto bg-white p-6 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold mb-4">Edit Program Kerja</h2>
         @if ($errors->any())
