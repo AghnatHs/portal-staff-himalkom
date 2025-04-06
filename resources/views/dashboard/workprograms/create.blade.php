@@ -40,7 +40,7 @@
                 </div>
             @endif
 
-            @include('components.sweet-alert');
+            @include('components.sweet-alert')
 
             <form action="{{ route('dashboard.workProgram.store', ['department' => $department]) }}" method="POST"
                 enctype="multipart/form-data" class="md:p-3 rounded-md space-y-2 md:space-y-4">

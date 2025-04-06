@@ -18,7 +18,7 @@
         <h1 class="text-3xl font-bold text-gray-800 mb-0">{{ $workProgram->name }}</h1>
         <p class="text-xs"> Departemen: {{ $workProgram->department->name }}</p>
 
-        @include('components.sweet-alert');
+        @include('components.sweet-alert')
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
             <div class="bg-gray-100 p-4 rounded-lg">

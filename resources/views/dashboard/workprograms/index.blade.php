@@ -16,7 +16,7 @@
     </x-slot>
     <div class="max-w-6xl mx-auto py-2 px-2">
 
-        @include('components.sweet-alert');
+        @include('components.sweet-alert')
 
         <div class="flex justify-end mb-3">
             <a href="{{ route('dashboard.workProgram.create', ['department' => $department]) }}"

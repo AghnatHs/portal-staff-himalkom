@@ -27,7 +27,7 @@
             {{ $workProgram->name }}</h1>
 
 
-        @include('components.sweet-alert');
+        @include('components.sweet-alert')
 
         @php
             $infoItems = [
