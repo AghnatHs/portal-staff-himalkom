@@ -43,7 +43,7 @@
         <div class="flex-grow ">
             @isset($header)
                 <header class="">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-[90dvw] mx-auto px-2 pt-4 pb-2 md:pt-6 md:px-3 ">
                         {{ $header }}
                     </div>
                 </header>
