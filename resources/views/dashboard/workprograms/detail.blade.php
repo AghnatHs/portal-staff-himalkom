@@ -102,7 +102,7 @@
                 @foreach ($files as $label => $url)
                     @if ($url)
                         <div
-                            class="flex items-center justify-between p-2 md:p-3 lg:p-4 bg-blue-50/50 rounded-lg border border-blue-100/70  rounded-lg">
+                            class="flex items-center justify-between p-2 md:p-3 lg:p-4 bg-blue-50/50 rounded-lg border border-blue-100/70">
                             <div>
                                 <p class="text-[13px] md:text-lg text-[#14267B] font-semibold">File
                                     {{ $label }}

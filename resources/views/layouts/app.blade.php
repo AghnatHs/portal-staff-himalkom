@@ -36,7 +36,7 @@
 <body class="font-sans antialiased">
     @include($navigation)
 
-    <div class="min-h-screen flex flex-col bg-cover bg-center bg-no-repeat min-h-[92dvh]"
+    <div class="flex flex-col bg-cover bg-center bg-no-repeat min-h-[92dvh]"
         style="background-image: url('{{ asset('images/bg4.jpg') }}');">
 
         <!-- Page Heading -->
