@@ -24,7 +24,7 @@
         class="relative max-w-[90dvw] lg:max-w-6xl mx-auto mt-2 mb-8 p-2 bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-lg 
             before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-r before:from-gray-200 before:to-gray-100 
             before:rounded-[inherit] before:p-[0.5px]">
-        <div class="bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-6 border border-gray-200">
+        <div class="bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-4 md:p-6 border border-gray-200">
             <h1 class="font-extrabold text-gray-900 md:mb-2 text-center text-lg md:text-xl lg:text-3xl">Tambah Program
                 Kerja - {{ $department->name }}
             </h1>
@@ -65,7 +65,7 @@
                 @foreach ($fields as $field => $label)
                     <div>
                         <label for="{{ $field }}"
-                            class=" mb-1 block font-normal text-gray-600 text-sm md:text-lg lg:text-lg">{{ $label }}</label>
+                            class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">{{ $label }}</label>
                         @if ($field === 'description')
                             <textarea name="{{ $field }}" required
                                 class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-3 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700 text-sm md:text-md lg:text-lg">{{ old($field) }}</textarea>
@@ -135,7 +135,7 @@
 
                 <div class="text-center">
                     <button type="submit"
-                        class="mt-4  bg-[#14267B] text-white px-4 py-2 md:px-6 md:py-2 rounded-xl shadow hover:bg-[#111B5A] hover:transition text-sm md:text-md lg:text-lg">
+                        class="mt-4 bg-[#14267B] text-white px-4 py-2 md:px-6 md:py-2 rounded-xl shadow hover:bg-[#111B5A] hover:transition text-sm md:text-md lg:text-lg">
                         Simpan
                     </button>
                 </div>
