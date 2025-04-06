@@ -13,9 +13,9 @@
                         {{ $workProgram->department->name }}
                     </a>
                     <span class="text-gray-400">/</span>
-                    <span class="text-gray-800 font-semibold">
+                    <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}" class="hover:underline hover:text-[#111B5A] cursor-pointer ">
                         {{ $workProgram->name }}
-                    </span>
+                    </a>
                     <span class="text-gray-400">/</span>
                     <span class="text-gray-800 font-semibold">
                         Edit
