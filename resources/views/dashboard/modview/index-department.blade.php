@@ -42,7 +42,7 @@
                         </h3>
                     </div>
 
-                    <div class="mt-3 flex items-center">
+                    <div class="mt-auto pt-2 flex items-center">
                         <a href="{{ route('dashboard.modview.department.show', ['department' => $department]) }}"
                             class="inline-flex items-center gap-1 text-white bg-[#111B5A] hover:bg-[#14267B] transition px-3 py-1.5 text-xs font-medium rounded-full">
                             Read More
