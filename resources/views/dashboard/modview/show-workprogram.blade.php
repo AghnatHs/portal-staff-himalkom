@@ -2,11 +2,11 @@
     <x-slot name="header">
         <div class="flex flex-row items-center">
             <div class="text-[11px] text-gray-500 font-medium md:text-sm">
-
                 <nav class="flex items-center space-x-1 md:space-x-2">
-                    <span>
+                    <a href="{{ route('dashboard.modview.department.index') }}"
+                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
                         Department
-                    </span>
+                    </a>
                     <span class="text-gray-400">/</span>
                     <a href="{{ route('dashboard.modview.department.show', ['department' => $workProgram->department]) }}"
                         class="hover:underline hover:text-[#111B5A] cursor-pointer">
@@ -27,31 +27,6 @@
             class="bg-white rounded-xl shadow-md border border-gray-200 flex gap-2 flex-row justify-between mt-2 md:mt-3 lg:mt-4 p-3 md:p-4 lg:p-6">
             <h1 class=" font-bold text-[#111B5A] text-lg md:text-xl  lg:text-3xl ">
                 {{ $workProgram->name }}</h1>
-            <div class="flex gap-3 md:gap-4 lg:gap-6 items-center">
-                <a href="{{ route('dashboard.workProgram.edit', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"
-                    class="text-blue-600 hover:text-blue-800 ">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-7 md:h-7 lg:w-8 lg:h-8" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path d="M12 20h9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" />
-                    </svg>
-                </a>
-                <form
-                    action="{{ route('dashboard.workProgram.destroy', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"
-                    method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus program ini?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-red-600 hover:text-red-800">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                d="M6 7h12M10 11v6m4-6v6M5 7l1 12a2 2 0 002 2h8a2 2 0 002-2l1-12M9 3h6a1 1 0 011 1v1H8V4a1 1 0 011-1z"
-                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
-                        </svg>
-                    </button>
-                </form>
-            </div>
         </div>
 
         @include('components.sweet-alert')

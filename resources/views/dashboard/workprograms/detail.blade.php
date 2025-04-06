@@ -25,7 +25,7 @@
     <div class="relative max-w-[90dvw] mx-auto rounded-lg px-2 py-1 md:px-4 md:py-1.5 lg:px-6 lg:py-2">
         <div
             class="bg-white rounded-xl shadow-md border border-gray-200 flex gap-2 flex-row justify-between mt-2 md:mt-3 lg:mt-4 p-3 md:p-4 lg:p-6">
-            <h1 class=" font-bold text-[#111B5A] text-lg md:text-xl  lg:text-3xl ">
+            <h1 class="font-bold text-[#111B5A] text-lg md:text-xl  lg:text-3xl">
                 {{ $workProgram->name }}</h1>
             <div class="flex gap-3 md:gap-4 lg:gap-6 items-center">
                 <a href="{{ route('dashboard.workProgram.edit', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"
