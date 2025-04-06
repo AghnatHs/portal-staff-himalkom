@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if ($userRole->contains("managing director") || $userRole->contains("bph")) {
-            return redirect()->intended(route('dashboard', ['department' => $user->department], absolute: false));
+            return redirect()->intended(route('dashboard', ['department' => $user->department->slug], absolute: false));
         } else if ($userRole->contains("supervisor")) {
             return redirect()->intended(route('dashboard.supervisor', absolute: false));
         } else {
