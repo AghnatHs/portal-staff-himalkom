@@ -87,6 +87,12 @@ Route::middleware('auth')
             ->name('workprogram.show');
     });
 
+//Clear Session
+Route::get('/session/clear/{key}', function ($key) {
+    session()->forget($key);
+    return response()->noContent();
+})->name('session.clear');
+
 
 
 // Breeze profile

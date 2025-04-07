@@ -17,33 +17,47 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/js/utils/formSubmitHandler.js']) <!-- prevent spamming form submit -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
     <script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
 
+    <!-- FilePond -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+    <!-- Select 2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include($navigation)
+    @include($navigation)
+
+    <div class="flex flex-col bg-cover bg-center bg-no-repeat min-h-[92dvh]"
+        style="background-image: url('{{ asset('images/bg4.jpg') }}');">
 
         <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
+        <div class="flex-grow ">
+            @isset($header)
+                <header class="">
+                    <div class="max-w-[90dvw] mx-auto px-2 pt-4 pb-2 md:pt-6 md:px-3 ">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+            <!-- Page Content -->
+            <main class="flex-grow">
+                {{ $slot }}
+            </main>
+        </div>
 
         @include('components.footer')
     </div>
 </body>
+
 
 </html>

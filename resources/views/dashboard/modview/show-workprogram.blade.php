@@ -1,157 +1,173 @@
 <x-app-layout :navigation="Auth::user()->hasRole('supervisor') ? 'layouts.navigation-spv' : 'layouts.navigation'">
     <x-slot name="header">
-        <div class="flex items-center gap-4">
-            <a href="{{ route('dashboard.modview.department.show', ['department' => $workProgram->department]) }}"
-                class="text-gray-600 hover:text-black">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 inline-block" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </a>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ $workProgram->department->name }} - "{{ $workProgram->name }}"
-            </h2>
+        <div class="flex flex-row items-center">
+            <div class="text-[11px] text-gray-500 font-medium md:text-sm">
+                <nav class="flex items-center space-x-1 md:space-x-2">
+                    <a href="{{ route('dashboard.modview.department.index') }}"
+                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                        Department
+                    </a>
+                    <span class="text-gray-400">/</span>
+                    <a href="{{ route('dashboard.modview.department.show', ['department' => $workProgram->department]) }}"
+                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                        {{ $workProgram->department->name }}
+                    </a>
+                    <span class="text-gray-400">/</span>
+                    <h2 class="text-gray-800 font-semibold">
+                        {{ $workProgram->name }}
+                    </h2>
+                </nav>
+
+            </div>
         </div>
     </x-slot>
-    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
 
-        <h1 class="text-3xl font-bold text-gray-800 mb-0">{{ $workProgram->name }}</h1>
-        <p class="text-xs"> Departemen: {{ $workProgram->department->name }}</p>
-
-        <script>
-            @if ($message = session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Sukses!',
-                    text: @json(session('success')),
-                    confirmButtonText: 'OK'
-                });
-            @endif
-        </script>
-
-        <script>
-            @if ($message = session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal!',
-                    text: @json(session('error')),
-                    confirmButtonText: 'Coba Lagi'
-                });
-            @endif
-        </script>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <p class="text-sm text-gray-600">Deskripsi:</p>
-                <p class="text-gray-800">{{ $workProgram->description }}</p>
-            </div>
-
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <p class="text-sm text-gray-600">Periode:</p>
-                <p class="text-gray-800">{{ $workProgram->timeline_range_text }}</p>
-            </div>
-
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <p class="text-sm text-gray-600">Dana:</p>
-                <p class="text-gray-800 font-semibold">Rp {{ number_format($workProgram->funds, 0, ',', '.') }}</p>
-            </div>
-
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <p class="text-sm text-gray-600">Sumber Dana:</p>
-                <p class="text-gray-800">{{ $workProgram->sources_of_funds }}</p>
-            </div>
-
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <p class="text-sm text-gray-600">Total Partisipasi:</p>
-                <p class="text-gray-800">{{ $workProgram->participation_total }} Orang</p>
-            </div>
-
-            <div class="bg-gray-100 p-4 rounded-lg">
-                <p class="text-sm text-gray-600">Cakupan Partisipasi:</p>
-                <p class="text-gray-800">{{ $workProgram->participation_coverage }}</p>
-            </div>
-
+    <div class="relative max-w-[90dvw] mx-auto rounded-lg px-2 py-1 md:px-4 md:py-1.5 lg:px-6 lg:py-2">
+        <div
+            class="bg-white rounded-xl shadow-md border border-gray-200 flex gap-2 flex-row justify-between mt-2 md:mt-3 lg:mt-4 p-3 md:p-4 lg:p-6">
+            <h1 class=" font-bold text-[#111B5A] text-lg md:text-xl  lg:text-3xl ">
+                {{ $workProgram->name }}</h1>
         </div>
-        @if ($workProgram->lpj_url)
-            <div class="bg-gray-100 p-4 rounded-lg my-2">
-                <p class="text-sm text-gray-600">File LPJ:</p>
-                <a class="text-red-700 hover:text-red-500"
-                    href="{{ route('pdf.show', ['filename' => explode('/', $workProgram->lpj_url)[1]]) }}"
-                    target="_blank">View or
-                    Download File</a>
-                <p class="text-xs text-gray-800">({{ explode('/', $workProgram->lpj_url)[1] }})</p>
-            </div>
-        @else
-            <div class="bg-red-200 p-4 rounded-lg my-2">
-                <p class="text-sm text-gray-600">File LPJ:</p>
-                <p class="text-gray-800">File LPJ belum diunggah</p>
-            </div>
-        @endif
 
-        @if ($workProgram->spg_url)
-            <div class="bg-gray-100 p-4 rounded-lg my-2">
-                <p class="text-sm text-gray-600">File SPG:</p>
-                <a class="text-red-700 hover:text-red-500"
-                    href="{{ route('pdf.show', ['filename' => explode('/', $workProgram->spg_url)[1]]) }}"
-                    target="_blank">View or
-                    Download File</a>
-                <p class="text-xs text-gray-800">({{ explode('/', $workProgram->spg_url)[1] }})</p>
-            </div>
-        @else
-            <div class="bg-red-200 p-4 rounded-lg my-2">
-                <p class="text-sm text-gray-600">File SPG:</p>
-                <p class="text-gray-800">File SPG belum diunggah</p>
-            </div>
-        @endif
+        @include('components.sweet-alert')
 
-        @if ($workProgram->comments->isNotEmpty())
-            <div class="mt-2 bg-white rounded-lg p-6">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Komentar</h3>
-                <ul class="space-y-4">
-                    @foreach ($workProgram->comments as $comment)
-                        <li class="border rounded-lg p-4 flex justify-between items-center bg-gray-50">
+        @php
+            $infoItems = [
+                'Deskripsi' => $workProgram->description,
+                'Periode' => $workProgram->timeline_range_text,
+                'Dana' => 'Rp ' . number_format($workProgram->funds, 0, ',', '.'),
+                'Sumber Dana' => $workProgram->sources_of_funds,
+                'Total Partisipasi' => $workProgram->participation_total . ' Orang',
+                'Cakupan Partisipasi' => $workProgram->participation_coverage,
+            ];
+
+            $files = [
+                'LPJ' => $workProgram->lpj_url,
+                'SPG' => $workProgram->spg_url,
+            ];
+        @endphp
+
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 mt-2 lg:mt-4 p-3 md:p-4 lg:p-6">
+            <div class="flex flex-col justify-center">
+                <h2 class="font-bold text-[#111B5A] mb-1 text-md md:text-lg md:mb-2 lg:text-2xl">📋 Informasi Program
+                    Kerja</h2>
+                <p class="text-[8px] md:text-[10px] text-gray-400 italic mb-1 md:mb-2 ml-2">id: {{ $workProgram->id }}
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-6">
+                @foreach ($infoItems as $label => $value)
+                    <div class="p-2 md:p-4 bg-blue-50/50 rounded-lg border border-blue-100/70 shadow-sm">
+                        <p class="text-[13px] md:text-lg font-semibold text-[#14267B] mb-1">
+                            {{ $label }}</p>
+                        <p
+                            class="text-[12px] md:text-[14px] lg:text-md text-gray-600  {{ $label === 'Dana' ? 'font-semibold' : '' }}">
+                            {{ $value }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="bg-white  rounded-xl shadow-md border border-gray-200 mt-2 md:mt-3 lg:mt-4 p-3 md:p-4 lg:p-6">
+            <h2 class="font-bold text-[#111B5A] mb-2 text-md md:text-lg md:mb-3 lg:mb-4 lg:text-2xl">📂 Dokumen Terkait
+            </h2>
+
+            <div class="space-y-3 md:space-y-4">
+                @foreach ($files as $label => $url)
+                    @if ($url)
+                        <div
+                            class="flex items-center justify-between p-2 md:p-3 lg:p-4 bg-blue-50/50 rounded-lg border border-blue-100/70">
                             <div>
-                                <small class="text-gray-500 block">{{ $comment->author->name }} -
-                                    {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</small>
-                                <div class="trix-content text-gray-700 mb-2">{!! $comment->content !!}</div>
-                                <small class="text-gray-400 block">{{ $comment->created_at }}</small>
+                                <p class="text-[13px] md:text-lg text-[#14267B] font-semibold">File
+                                    {{ $label }}
+                                </p>
+                                <p class="text-[9px] md:text-sm italic text-gray-600">{{ explode('/', $url)[1] }}</p>
                             </div>
-                            @if (Auth::user()->id === $comment->user_id)
-                                <form method="POST"
-                                    action="{{ route('dashboard.workProgram.comment.destroy', ['workProgram' => $workProgram, 'comment' => $comment]) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="text-red-500 text-sm hover:text-red-700">Hapus</button>
-                                </form>
-                            @endif
-                        </li>
-                    @endforeach
-                </ul>
+                            <a href="{{ route('pdf.show', ['filename' => explode('/', $url)[1]]) }}" target="_blank"
+                                class="text-[10px] w-[140px] md:text-sm px-2 py-2 md:px-4 text-white bg-[#111B5A] hover:bg-[#14267B] rounded-md transition">
+                                📄 Lihat / Unduh
+                            </a>
+                        </div>
+                    @else
+                        <div class="bg-red-100 border border-red-300 rounded-lg p-2 md:p-3 lg:p-4">
+                            <p class="text-[13px] md:text-lg text-red-700 font-medium">File
+                                {{ $label }}</p>
+                            <p class="text-[9px] md:text-sm text-gray-800">File {{ $label }} belum diunggah</p>
+                        </div>
+                    @endif
+                @endforeach
             </div>
-        @else
-            <div class="bg-gray-50 p-4 rounded-lg my-2">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Komentar</h3>
-                <p class="text-gray-600">Belum ada komentar.</p>
+        </div>
+
+
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 mt-2 md:mt-3 lg:mt-4 p-3 md:p-4 lg:p-6">
+            <div class="mt-1 md:mt-2">
+                <h3 class="font-bold text-[#111B5A] mb-2 text-md md:text-lg md:mb-3 lg:mb-4 lg:text-2x">💬 Diskusi &
+                    Komentar</h3>
+                @if ($workProgram->comments->isNotEmpty())
+                    <ul class="space-y-1 md:space-y-2">
+                        @foreach ($workProgram->comments as $comment)
+                            <div class="rounded-lg p-2">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="text-[13px] md:text-lg text-[#14267B] font-semibold">
+                                            {{ $comment->author->name }}
+                                            <span
+                                                class="text-[9px] md:text-[14px] lg:text-sm text-gray-400 font-normal">
+                                                •
+                                                {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
+                                        </p>
+                                        <div
+                                            class="text-[12px] md:text-[16px] lg:text-md trix-content font-normal text-gray-600 mt-1 md:mt-2">
+                                            {!! $comment->content !!}
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1 md:mt-2">{{ $comment->created_at }}</p>
+                                    </div>
+
+                                    @if (Auth::id() === $comment->user_id)
+                                        <form method="POST"
+                                            action="{{ route('dashboard.workProgram.comment.destroy', ['workProgram' => $workProgram, 'comment' => $comment]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Hapus Komentar"
+                                                class="text-red-400 hover:text-red-500 italic transition duration-200 ease-in-out text-[9px] md:text-[14px] lg:text-md">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    @endif
+
+                                </div>
+                                <div class="h-[0.5px] md:h-[1px] mt-2 md:mt-3 bg-gray-200 w-full"></div>
+                            </div>
+                        @endforeach
+                    </ul>
+                @else
+                    <p class="text-gray-600">Belum ada komentar atau catatan.</p>
+                @endif
             </div>
-        @endif
 
-        <form method="POST"
-            action="{{ route('dashboard.workProgram.comment.store', ['workProgram' => $workProgram]) }}"
-            class="mt-2 bg-white rounded-lg p-6">
-            @csrf
+            <div class="mt-2 p-2">
+                <h4 class="font-bold text-[#111B5A] mb-2 text-[14px] md:text-[18px] md:mb-3 lg:mb-4 lg:text-xl">📝
+                    Tambah Komentar</h4>
+                <form method="POST"
+                    action="{{ route('dashboard.workProgram.comment.store', ['workProgram' => $workProgram]) }}">
+                    @csrf
+                    <input id="content" type="hidden" name="content">
+                    <trix-editor input="content"
+                        class="trix-content w-full h-32 bg-gray-100 border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-gray-300 text-[13px] md:text-[16px] lg:text-md"></trix-editor>
 
-            <input id="content" type="hidden" name="content">
-            <trix-editor input="content"
-                class="trix-content w-full h-32 bg-gray-100 border rounded-lg p-2"></trix-editor>
-
-            <button type="submit"
-                class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition">
-                Tambah Komentar
-            </button>
-        </form>
-
+                    <div class="flex justify-end">
+                        <button type="submit"
+                            class="mt-2 px-2 py-1 md:px-3 md:py-1.5 lg:px-4 lg:py-2 text-white bg-[#111B5A] hover:bg-[#14267B] rounded-md transition text-[10px] md:text-[14px] lg:text-sm">
+                            Kirim Komentar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.css">
