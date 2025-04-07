@@ -18,7 +18,7 @@ class WorkProgramsController extends Controller
     {
         $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME); // only filename not extension
         $filename = preg_replace('/[^a-zA-Z0-9_\-\s()]/', '', $filename);
-        $generatedFilename = time() . '-' . Str::random(rand(4, 16)) . '_' . Str::slug($filename) . $extension; // always pdf cause it pass validation
+        $generatedFilename = time() . '-' . Str::random(rand(4, 16)) . '_' . Str::slug($filename) . $extension;
         return $generatedFilename;
     }
 
