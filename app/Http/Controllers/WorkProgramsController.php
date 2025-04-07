@@ -7,12 +7,21 @@ use App\Models\Department;
 use App\Models\WorkProgram;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class WorkProgramsController extends Controller
 {
+    private function generateFilename(UploadedFile $file, string $extension = '.pdf')
+    {
+        $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME); // only filename not extension
+        $filename = preg_replace('/[^a-zA-Z0-9_\-\s()]/', '', $filename);
+        $generatedFilename = time() . '-' . Str::random(rand(4, 16)) . '_' . Str::slug($filename) . $extension; // always pdf cause it pass validation
+        return $generatedFilename;
+    }
+
     public function index(Department $department): View
     {
         if (Auth::user()->department_id !== $department->id) {
@@ -64,14 +73,12 @@ class WorkProgramsController extends Controller
 
         try {
             if ($request->hasFile('lpj_url')) {
-                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $request->file('lpj_url')->getClientOriginalName());
-                $lpjPath = $request->file('lpj_url')->storeAs('private', $generatedFilename, 'private');
+                $lpjPath = $request->file('lpj_url')->storeAs('private', $this->generateFilename($request->file('lpj_url')), 'private');
                 $validated['lpj_url'] = $lpjPath;
             }
 
             if ($request->hasFile('spg_url')) {
-                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $request->file('spg_url')->getClientOriginalName());
-                $spgPath = $request->file('spg_url')->storeAs('private', $generatedFilename, 'private');
+                $spgPath = $request->file('spg_url')->storeAs('private', $this->generateFilename($request->file('spg_url')), 'private');
                 $validated['spg_url'] = $spgPath;
             }
 
@@ -134,8 +141,7 @@ class WorkProgramsController extends Controller
                     }
                 }
 
-                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $newFile->getClientOriginalName());
-                $validated['lpj_url'] = $newFile->storeAs('private', $generatedFilename, 'private');
+                $validated['lpj_url'] = $newFile->storeAs('private', $this->generateFilename($request->file('lpj_url')), 'private');
             } else {
                 $validated['lpj_url'] = $workProgram->lpj_url;
             }
@@ -150,8 +156,7 @@ class WorkProgramsController extends Controller
                     }
                 }
 
-                $generatedFilename = time() . '-' . Str::random(8) . '_' . str_replace(' ', '-', $newFile->getClientOriginalName());
-                $validated['spg_url'] = $newFile->storeAs('private', $generatedFilename, 'private');
+                $validated['spg_url'] = $newFile->storeAs('private', $this->generateFilename($request->file('lpj_url')), 'private');
             } else {
                 $validated['spg_url'] = $workProgram->spg_url;
             }
