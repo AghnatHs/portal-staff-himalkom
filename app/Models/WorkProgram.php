@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Department;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -114,6 +115,16 @@ class WorkProgram extends Model
         static::creating(function ($model) {
             if (!$model->id) {
                 $model->id = Str::ulid()->toBase32();
+            }
+        });
+
+        static::deleting(function ($model) {
+            $disk = Storage::disk('private');
+
+            foreach (['lpj_url', 'spg_url'] as $fileField) {
+                if ($model->$fileField) {
+                    $disk->delete($model->$fileField);
+                }
             }
         });
     }
