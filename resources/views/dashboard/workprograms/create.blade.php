@@ -57,7 +57,7 @@
                         'participation_total' => 'Total Partisipasi',
                         'participation_coverage' => 'Cakupan Partisipasi',
                         'lpj_url' => 'Upload LPJ (pdf, max: 5 MB)',
-                        'spg_url' => 'Upload SPG (pdf, max: 5 MB)',
+                        'spg_url' => 'Upload SPJ(pdf, max: 5 MB)',
                     ];
                 @endphp
 

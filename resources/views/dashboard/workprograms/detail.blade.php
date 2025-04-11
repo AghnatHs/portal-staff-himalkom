@@ -68,7 +68,7 @@
 
             $files = [
                 'LPJ' => $workProgram->lpj_url,
-                'SPG' => $workProgram->spg_url,
+                'SPJ' => $workProgram->spg_url,
             ];
         @endphp
 

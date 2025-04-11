@@ -179,12 +179,12 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="spg_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload SPG
+                    <label for="spg_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload SPJ
                         (pdf, max: 5
                         MB)</label>
                     @if ($workProgram->spg_url)
                         <div class="bg-gray-100 p-2 md:p-4 rounded-lg">
-                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File SPG:</p>
+                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File SPJ:</p>
                             <p class="text-xs text-gray-800">{{ explode('/', $workProgram->spg_url)[1] }}</p>
                             <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
                                 tidak ingin mengubah file</p>
