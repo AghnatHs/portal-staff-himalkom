@@ -12,19 +12,28 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * 
  *
- * @property-read \App\Models\User|null $author
- * @property-read \App\Models\WorkProgram|null $workProgram
+ * @property string $id
+ * @property string $work_program_id
+ * @property string $user_id
+ * @property string $content
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User $author
+ * @property-read \App\Models\WorkProgram $workProgram
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgramComment whereWorkProgramId($value)
  * @mixin \Eloquent
  */
 class WorkProgramComment extends Model
 {
-    use HasUlids, SoftDeletes;
+    use HasUlids;
     public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable = [
