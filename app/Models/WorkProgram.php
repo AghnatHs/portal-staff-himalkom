@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Department;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,17 +29,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $department_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkProgramComment> $comments
  * @property-read int|null $comments_count
  * @property-read Department $department
  * @property-read mixed $timeline_range_text
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereDepartmentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereFinishedAt($value)
@@ -52,13 +50,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereSpgUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereStartAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram withoutTrashed()
  * @mixin \Eloquent
  */
 class WorkProgram extends Model
 {
-    use HasUlids, SoftDeletes;
+    use HasUlids;
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -119,6 +115,16 @@ class WorkProgram extends Model
         static::creating(function ($model) {
             if (!$model->id) {
                 $model->id = Str::ulid()->toBase32();
+            }
+        });
+
+        static::deleting(function ($model) {
+            $disk = Storage::disk('private');
+
+            foreach (['lpj_url', 'spg_url'] as $fileField) {
+                if ($model->$fileField) {
+                    $disk->delete($model->$fileField);
+                }
             }
         });
     }
