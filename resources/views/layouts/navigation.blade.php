@@ -16,9 +16,12 @@
                         Dashboard
                     </x-nav-link>
 
-                      <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
-                        Program Kerja
-                    </x-nav-link>
+                    @hasanyrole('managing director')
+                        <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
+                            Program Kerja
+                        </x-nav-link>
+                    @else
+                    @endhasanyrole
 
                     @hasanyrole('bph')
                         <x-nav-link :href="route('dashboard.modview.department.index')" :active="request()->routeIs('dashboard.modview.*')">
