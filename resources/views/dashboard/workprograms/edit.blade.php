@@ -217,7 +217,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const displayInput = document.getElementById("funds_display");
-        const hiddenInput = document.getElementById("funds");
+        const fundsHiddenInput = document.getElementById("funds");
 
         function formatCurrency(value) {
             return new Intl.NumberFormat('id-ID', {
@@ -232,7 +232,7 @@
         displayInput.addEventListener("input", function(e) {
             let rawValue = this.value.replace(/\D/g, "");
             this.value = formatCurrency(rawValue);
-            hiddenInput.value = unformatCurrency(rawValue);
+            fundsHiddenInput.value = unformatCurrency(rawValue);
         });
     });
 
