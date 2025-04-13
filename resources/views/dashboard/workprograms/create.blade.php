@@ -114,25 +114,13 @@
                                 </div>
                             </div>
                         @elseif($field === 'proposal_url')
-                            <div class="mb-4">
-                                <input type="file" name="proposal_url" id="proposal_url" accept="application/pdf"
-                                    class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
-                            </div>
+                            <x-workprogram.file-upload name="{{ $field }}" />
                         @elseif($field === 'lpj_url')
-                            <div class="mb-4">
-                                <input type="file" name="lpj_url" id="lpj_url" accept="application/pdf"
-                                    class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
-                            </div>
+                            <x-workprogram.file-upload name="{{ $field }}" />
                         @elseif($field === 'spg_url')
-                            <div class="mb-4">
-                                <input type="file" name="spg_url" id="spg_url" accept="application/pdf"
-                                    class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
-                            </div>
+                            <x-workprogram.file-upload name="{{ $field }}" />
                         @elseif($field === 'komnews_url')
-                            <div class="mb-4">
-                                <input type="file" name="komnews_url" id="komnews_url" accept="application/pdf"
-                                    class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
-                            </div>
+                            <x-workprogram.file-upload name="{{ $field }}" />
                         @else
                             <input
                                 type="{{ in_array($field, ['start_at', 'finished_at']) ? 'date' : (in_array($field, ['funds', 'participation_total']) ? 'number' : 'text') }}"

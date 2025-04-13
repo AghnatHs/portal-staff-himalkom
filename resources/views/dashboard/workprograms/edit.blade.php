@@ -157,91 +157,11 @@
                     </select>
                 </div>
 
-                <div class="mb-4">
-                    <label for="proposal_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload
-                        Proposal
-                        (pdf, max: 5
-                        MB)</label>
-                    @if ($workProgram->proposal_url)
-                        <div class="bg-gray-100 p-2 md:p-4 rounded-lg">
-                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File Proposal:</p>
-                            <p class="text-xs text-gray-800">{{ explode('/', $workProgram->proposal_url)[1] }}</p>
-                            <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
-                                tidak ingin mengubah file</p>
-                        </div>
-                    @else
-                        <div class="bg-red-200 p-2 md:p-4 mb-2 rounded-lg">
-                            <p class="text-gray-800">File Proposal belum diunggah, silahkan unggah disini</p>
-                        </div>
-                    @endif
+                <x-workprogram.file-upload-edit name="proposal_url" label="Upload Proposal" :filePath="$workProgram->proposal_url" />
+                <x-workprogram.file-upload-edit name="lpj_url" label="Upload LPJ" :filePath="$workProgram->lpj_url" />
+                <x-workprogram.file-upload-edit name="spg_url" label="Upload SPJ" :filePath="$workProgram->spg_url" />
+                <x-workprogram.file-upload-edit name="komnews_url" label="Upload Komnews/Berita" :filePath="$workProgram->komnews_url" />
 
-                    <input type="file" name="proposal_url" id="proposal_url" accept="application/pdf"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <div class="mb-4">
-                    <label for="lpj_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload LPJ
-                        (pdf, max: 5
-                        MB)</label>
-                    @if ($workProgram->lpj_url)
-                        <div class="bg-gray-100 p-2 md:p-4 rounded-lg">
-                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File LPJ:</p>
-                            <p class="text-xs text-gray-800">{{ explode('/', $workProgram->lpj_url)[1] }}</p>
-                            <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
-                                tidak ingin mengubah file</p>
-                        </div>
-                    @else
-                        <div class="bg-red-200 p-2 md:p-4 mb-2 rounded-lg">
-                            <p class="text-gray-800">File LPJ belum diunggah, silahkan unggah disini</p>
-                        </div>
-                    @endif
-
-                    <input type="file" name="lpj_url" id="lpj_url" accept="application/pdf"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <div class="mb-4">
-                    <label for="spg_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload SPJ
-                        (pdf, max: 5
-                        MB)</label>
-                    @if ($workProgram->spg_url)
-                        <div class="bg-gray-100 p-2 md:p-4 rounded-lg">
-                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File SPJ:</p>
-                            <p class="text-xs text-gray-800">{{ explode('/', $workProgram->spg_url)[1] }}</p>
-                            <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
-                                tidak ingin mengubah file</p>
-                        </div>
-                    @else
-                        <div class="bg-red-200 p-2 md:p-4 mb-2 rounded-lg">
-                            <p class="text-gray-800">File SPG belum diunggah, silahkan unggah disini</p>
-                        </div>
-                    @endif
-
-                    <input type="file" name="spg_url" id="spg_url" accept="application/pdf"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <div class="mb-4">
-                    <label for="komnews_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload
-                        Komnews/Berita
-                        (pdf, max: 5
-                        MB)</label>
-                    @if ($workProgram->komnews_url)
-                        <div class="bg-gray-100 p-2 md:p-4 rounded-lg">
-                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File Komnews:</p>
-                            <p class="text-xs text-gray-800">{{ explode('/', $workProgram->komnews_url)[1] }}</p>
-                            <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
-                                tidak ingin mengubah file</p>
-                        </div>
-                    @else
-                        <div class="bg-red-200 p-2 md:p-4 mb-2 rounded-lg">
-                            <p class="text-gray-800">File Komnews belum diunggah, silahkan unggah disini</p>
-                        </div>
-                    @endif
-
-                    <input type="file" name="komnews_url" id="komnews_url" accept="application/pdf"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
-                </div>
 
                 <div class="flex justify-end space-x-2">
                     <a href="{{ route('dashboard.workProgram.detail', ['workProgram' => $workProgram, 'department' => $workProgram->department]) }}"
@@ -282,5 +202,33 @@
 
     $(document).ready(function() {
         $('#participation_coverage').select2();
+    });
+
+    FilePond.create(document.getElementById('proposal_url'), {
+        allowMultiple: false,
+        acceptedFileTypes: ['application/pdf'],
+        labelIdle: 'Drag & Drop file Proposal atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        storeAsFile: true
+    });
+
+    FilePond.create(document.getElementById('lpj_url'), {
+        allowMultiple: false,
+        acceptedFileTypes: ['application/pdf'],
+        labelIdle: 'Drag & Drop file LPJ atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        storeAsFile: true
+    });
+
+    FilePond.create(document.getElementById('spg_url'), {
+        allowMultiple: false,
+        acceptedFileTypes: ['application/pdf'],
+        labelIdle: 'Drag & Drop file SPJ atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        storeAsFile: true
+    });
+
+    FilePond.create(document.getElementById('komnews_url'), {
+        allowMultiple: false,
+        acceptedFileTypes: ['application/pdf'],
+        labelIdle: 'Drag & Drop file Komnews atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        storeAsFile: true
     });
 </script>
