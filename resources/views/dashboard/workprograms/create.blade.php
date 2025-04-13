@@ -56,8 +56,10 @@
                         'sources_of_funds' => 'Sumber Dana',
                         'participation_total' => 'Total Partisipasi',
                         'participation_coverage' => 'Cakupan Partisipasi',
+                        'proposal_url' => 'Upload Proposal (pdf, max: 5 MB)',
                         'lpj_url' => 'Upload LPJ (pdf, max: 5 MB)',
                         'spg_url' => 'Upload SPJ(pdf, max: 5 MB)',
+                        'komnews_url' => 'Upload Komnews/Berita (pdf, max: 5 MB)',
                     ];
                 @endphp
 
@@ -111,6 +113,11 @@
                                     </label>
                                 </div>
                             </div>
+                        @elseif($field === 'proposal_url')
+                            <div class="mb-4">
+                                <input type="file" name="proposal_url" id="proposal_url" accept="application/pdf"
+                                    class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
+                            </div>
                         @elseif($field === 'lpj_url')
                             <div class="mb-4">
                                 <input type="file" name="lpj_url" id="lpj_url" accept="application/pdf"
@@ -119,6 +126,11 @@
                         @elseif($field === 'spg_url')
                             <div class="mb-4">
                                 <input type="file" name="spg_url" id="spg_url" accept="application/pdf"
+                                    class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
+                            </div>
+                        @elseif($field === 'komnews_url')
+                            <div class="mb-4">
+                                <input type="file" name="komnews_url" id="komnews_url" accept="application/pdf"
                                     class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-700  text-sm md:text-md lg:text-lg">
                             </div>
                         @else
@@ -170,6 +182,13 @@
         $('#participation_coverage').select2();
     });
 
+    FilePond.create(document.getElementById('proposal_url'), {
+        allowMultiple: false,
+        acceptedFileTypes: ['application/pdf'],
+        labelIdle: 'Drag & Drop file Proposal atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        storeAsFile: true
+    });
+
     FilePond.create(document.getElementById('lpj_url'), {
         allowMultiple: false,
         acceptedFileTypes: ['application/pdf'],
@@ -180,7 +199,14 @@
     FilePond.create(document.getElementById('spg_url'), {
         allowMultiple: false,
         acceptedFileTypes: ['application/pdf'],
-        labelIdle: 'Drag & Drop file SPG atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        labelIdle: 'Drag & Drop file SPJ atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
+        storeAsFile: true
+    });
+
+    FilePond.create(document.getElementById('komnews_url'), {
+        allowMultiple: false,
+        acceptedFileTypes: ['application/pdf'],
+        labelIdle: 'Drag & Drop file Komnews atau <span class="filepond--label-action text-[#14267B]">Klik di sini</span>',
         storeAsFile: true
     });
 </script>

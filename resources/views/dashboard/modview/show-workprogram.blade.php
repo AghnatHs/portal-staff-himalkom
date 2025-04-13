@@ -42,8 +42,10 @@
             ];
 
             $files = [
+                'Proposal' => $workProgram->proposal_url,
                 'LPJ' => $workProgram->lpj_url,
                 'SPJ' => $workProgram->spg_url,
+                'Komnews' => $workProgram->komnews_url,
             ];
         @endphp
 

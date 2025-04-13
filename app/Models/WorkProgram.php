@@ -68,8 +68,10 @@ class WorkProgram extends Model
         'participation_total',
         'participation_coverage',
         'department_id',
+        'proposal_url',
         'lpj_url',
-        'spg_url'
+        'spg_url',
+        'komnews_url'
     ];
 
     public function comments(): HasMany
@@ -121,7 +123,7 @@ class WorkProgram extends Model
         static::deleting(function ($model) {
             $disk = Storage::disk('private');
 
-            foreach (['lpj_url', 'spg_url'] as $fileField) {
+            foreach (['lpj_url', 'spg_url', 'proposal_url', 'komnews_url'] as $fileField) {
                 if ($model->$fileField) {
                     $disk->delete($model->$fileField);
                 }
