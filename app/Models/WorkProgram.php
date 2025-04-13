@@ -68,8 +68,10 @@ class WorkProgram extends Model
         'participation_total',
         'participation_coverage',
         'department_id',
+        'proposal_url',
         'lpj_url',
-        'spg_url'
+        'spg_url',
+        'komnews_url'
     ];
 
     public function comments(): HasMany

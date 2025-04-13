@@ -66,20 +66,24 @@ class WorkProgramsController extends Controller
             'participation_total' => 'required|integer|min:0',
             'participation_coverage' => 'required|string|max:255',
             'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120',
-            'spg_url' => 'sometimes|nullable|mimes:pdf|max:5120'
+            'spg_url' => 'sometimes|nullable|mimes:pdf|max:5120',
+            'proposal_url' => 'sometimes|nullable|mimes:pdf|max:5120',
+            'komnews_url' => 'sometimes|nullable|mimes:pdf|max:5120'
         ]);
 
         DB::beginTransaction();
 
         try {
-            if ($request->hasFile('lpj_url')) {
-                $lpjPath = $request->file('lpj_url')->storeAs('private', $this->generateFilename($request->file('lpj_url')), 'private');
-                $validated['lpj_url'] = $lpjPath;
-            }
+            $fileFields = ['lpj_url', 'spg_url', 'proposal_url', 'komnews_url'];
 
-            if ($request->hasFile('spg_url')) {
-                $spgPath = $request->file('spg_url')->storeAs('private', $this->generateFilename($request->file('spg_url')), 'private');
-                $validated['spg_url'] = $spgPath;
+            foreach ($fileFields as $field) {
+                if ($request->hasFile($field)) {
+                    $validated[$field] = $request->file($field)->storeAs(
+                        'private',
+                        $this->generateFilename($request->file($field)),
+                        'private'
+                    );
+                }
             }
 
             $validated['sources_of_funds'] = json_encode($validated['sources_of_funds']);
@@ -125,42 +129,36 @@ class WorkProgramsController extends Controller
             'participation_total' => 'required|integer|min:0',
             'participation_coverage' => 'required|string|max:255',
             'lpj_url' => 'sometimes|nullable|mimes:pdf|max:5120',
-            'spg_url' => 'sometimes|nullable|mimes:pdf|max:5120'
+            'spg_url' => 'sometimes|nullable|mimes:pdf|max:5120',
+            'proposal_url' => 'sometimes|nullable|mimes:pdf|max:5120',
+            'komnews_url' => 'sometimes|nullable|mimes:pdf|max:5120'
         ]);
 
         DB::beginTransaction();
 
         try {
-            if ($request->hasFile('lpj_url')) {
-                $newFile = $request->file('lpj_url');
-                $oldFile = $workProgram->lpj_url;
+            $fileFields = ['lpj_url', 'spg_url', 'proposal_url', 'komnews_url'];
 
-                if ($oldFile && Storage::disk('private')->exists($oldFile)) {
-                    if (md5_file($newFile->path()) !== md5_file(Storage::disk('private')->path($oldFile))) {
-                        Storage::disk('private')->delete($oldFile);
+            foreach ($fileFields as $field) {
+                if ($request->hasFile($field)) {
+                    $newFile = $request->file($field);
+                    $oldFile = $workProgram->$field;
+
+                    if ($oldFile && Storage::disk('private')->exists($oldFile)) {
+                        if (md5_file($newFile->path()) !== md5_file(Storage::disk('private')->path($oldFile))) {
+                            Storage::disk('private')->delete($oldFile);
+                        }
                     }
+
+                    $validated[$field] = $newFile->storeAs(
+                        'private',
+                        $this->generateFilename($newFile),
+                        'private'
+                    );
+                } else {
+                    $validated[$field] = $workProgram->$field;
                 }
-
-                $validated['lpj_url'] = $newFile->storeAs('private', $this->generateFilename($request->file('lpj_url')), 'private');
-            } else {
-                $validated['lpj_url'] = $workProgram->lpj_url;
             }
-
-            if ($request->hasFile('spg_url')) {
-                $newFile = $request->file('spg_url');
-                $oldFile = $workProgram->spg_url;
-
-                if ($oldFile && Storage::disk('private')->exists($oldFile)) {
-                    if (md5_file($newFile->path()) !== md5_file(Storage::disk('private')->path($oldFile))) {
-                        Storage::disk('private')->delete($oldFile);
-                    }
-                }
-
-                $validated['spg_url'] = $newFile->storeAs('private', $this->generateFilename($request->file('lpj_url')), 'private');
-            } else {
-                $validated['spg_url'] = $workProgram->spg_url;
-            }
-
 
             $validated['sources_of_funds'] = json_encode($validated['sources_of_funds']);
             $workProgram->update($validated);

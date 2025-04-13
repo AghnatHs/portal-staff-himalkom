@@ -158,6 +158,28 @@
                 </div>
 
                 <div class="mb-4">
+                    <label for="proposal_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload
+                        Proposal
+                        (pdf, max: 5
+                        MB)</label>
+                    @if ($workProgram->proposal_url)
+                        <div class="bg-gray-100 p-2 md:p-4 rounded-lg">
+                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File Proposal:</p>
+                            <p class="text-xs text-gray-800">{{ explode('/', $workProgram->proposal_url)[1] }}</p>
+                            <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
+                                tidak ingin mengubah file</p>
+                        </div>
+                    @else
+                        <div class="bg-red-200 p-2 md:p-4 mb-2 rounded-lg">
+                            <p class="text-gray-800">File Proposal belum diunggah, silahkan unggah disini</p>
+                        </div>
+                    @endif
+
+                    <input type="file" name="proposal_url" id="proposal_url" accept="application/pdf"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
                     <label for="lpj_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload LPJ
                         (pdf, max: 5
                         MB)</label>
@@ -196,6 +218,28 @@
                     @endif
 
                     <input type="file" name="spg_url" id="spg_url" accept="application/pdf"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="mb-4">
+                    <label for="komnews_url" class="mb-1 block font-normal text-gray-600 text-sm md:text-lg">Upload
+                        Komnews/Berita
+                        (pdf, max: 5
+                        MB)</label>
+                    @if ($workProgram->komnews_url)
+                        <div class="bg-gray-100 p-2 md:p-4 rounded-lg">
+                            <p class="text-sm md:text-md lg:text-lg text-gray-600">File Komnews:</p>
+                            <p class="text-xs text-gray-800">{{ explode('/', $workProgram->komnews_url)[1] }}</p>
+                            <p class="text-xs text-red-600">Mengunggah file baru akan menimpa file lama, kosongkan jika
+                                tidak ingin mengubah file</p>
+                        </div>
+                    @else
+                        <div class="bg-red-200 p-2 md:p-4 mb-2 rounded-lg">
+                            <p class="text-gray-800">File Komnews belum diunggah, silahkan unggah disini</p>
+                        </div>
+                    @endif
+
+                    <input type="file" name="komnews_url" id="komnews_url" accept="application/pdf"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500">
                 </div>
 
