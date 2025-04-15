@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
 
 // Serving Private pdfs
 Route::get('/pdf/{filename}', [PDFController::class, 'showPrivatePdf'])
-    ->name('pdf.show');
+    ->name('pdf.show'); // auth middleware is in the controller itself
 
 // Department view (access only by managing director of dept, bph, or supervisor)
 Route::middleware('auth')
