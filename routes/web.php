@@ -93,8 +93,6 @@ Route::get('/session/clear/{key}', function ($key) {
     return response()->noContent();
 })->name('session.clear');
 
-
-
 // Breeze profile
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
