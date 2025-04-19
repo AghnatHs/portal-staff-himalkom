@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $department_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $proposal_url
+ * @property string|null $komnews_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WorkProgramComment> $comments
  * @property-read int|null $comments_count
  * @property-read Department $department
@@ -42,10 +44,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereFinishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereFunds($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereKomnewsUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereLpjUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereParticipationCoverage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereParticipationTotal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereProposalUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereSourcesOfFunds($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereSpgUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WorkProgram whereStartAt($value)
