@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentArchiveController;
 use App\Http\Controllers\WorkProgramsController;
 use App\Http\Controllers\WorkProgramsCommentController;
 use App\Http\Controllers\ModViewController;
@@ -22,6 +23,14 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:managing director|bph')
         ->name('dashboard');
 });
+
+// Archives
+Route::middleware('auth')
+    ->prefix('/dashboard/archive')
+    ->name('archive.')
+    ->group(function () {
+        Route::get('/departments', [DepartmentArchiveController::class, 'index'])->name('department.index');
+    });
 
 // Work Programs
 Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
