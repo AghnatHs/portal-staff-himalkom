@@ -26,7 +26,7 @@ class GlobalAnnouncement extends Notification
     {
         return (new MailMessage)
             ->subject($this->title)
-            ->line("Halo {$notifiable->name}")
+            ->line($notifiable->name)
             ->line($this->message)
             ->line('Thank you for your attention!');
     }
