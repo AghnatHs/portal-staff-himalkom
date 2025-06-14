@@ -10,7 +10,7 @@
     </x-slot>
 
     <div class="py-12 px-4 sm:px-4 md:px-4 lg:px-0">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @forelse ($notifications as $notification)
                     <div class="p-6 border-b border-gray-200 hover:bg-gray-50 transition">
