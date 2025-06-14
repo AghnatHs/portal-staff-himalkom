@@ -55,8 +55,9 @@
             <x-input-label for="department" value="Department" />
             <input id="department" type="text"
                 class="mt-1 block w-full text-gray-500 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                value="{{ $user->department->name }}" readonly disabled>
+                value="{{ $user->department->name ?? '-' }}" readonly disabled>
         </div>
+
 
         <div>
             <x-input-label for="roles" value="Roles" />
