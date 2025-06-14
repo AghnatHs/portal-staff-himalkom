@@ -17,7 +17,7 @@ class GlobalAnnouncement extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'title' => $this->title,
+            'title' => 'Public' . ' - ' . $this->title,
             'message' => $this->message,
         ];
     }
