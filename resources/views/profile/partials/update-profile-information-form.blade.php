@@ -58,7 +58,6 @@
                 value="{{ $user->department->name ?? '-' }}" readonly disabled>
         </div>
 
-
         <div>
             <x-input-label for="roles" value="Roles" />
             <input id="roles" type="text"
