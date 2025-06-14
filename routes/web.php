@@ -13,6 +13,14 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+// Notification dashboard
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/notifications', [DashboardController::class, 'showNotifications'])
+        ->name('dashboard.notifications.index');
+    Route::patch('/dashboard/notifications/{id}/read', [DashboardController::class, 'readNotification'])
+        ->name('dashboard.notifications.markAsRead');
+});
+
 // Main dashboard (access only by user of its department or its role)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/supervisor', [DashboardController::class, 'showSupervisor'])

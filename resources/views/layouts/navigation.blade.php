@@ -30,6 +30,10 @@
                     @else
                     @endhasanyrole
 
+                    <x-nav-link :href="route('dashboard.notifications.index')" :active="request()->routeIs('dashboard.notifications.*')">
+                        Notifications
+                    </x-nav-link>
+
                 </div>
             </div>
 
@@ -104,6 +108,10 @@
                 </x-responsive-nav-link>
             @else
             @endhasanyrole
+
+            <x-responsive-nav-link :href="route('dashboard.notifications.index')" :active="request()->routeIs('dashboard.notifications.*')">
+                Notifications
+            </x-responsive-nav-link>
 
         </div>
 
