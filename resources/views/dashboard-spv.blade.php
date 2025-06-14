@@ -47,6 +47,9 @@
                                             </a>
                                         </li>
                                     @empty
+                                        <li>
+                                            <span class="text-gray-500">No Data Available.</span>
+                                        </li>
                                     @endforelse
                                     <li>
                                         <a href="{{ route('dashboard.modview.department.index') }}"
