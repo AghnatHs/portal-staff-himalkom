@@ -21,7 +21,16 @@ class DashboardController extends Controller
         if ($department->id != $userDepartment->id) {
             abort(403, 'Unauthorized access to this department');
         }
-        return view('dashboard');
+
+        $departmentSlugs = Department::orderBy('name')
+            ->pluck('name', 'slug')
+            ->toArray();
+
+        $departmentWorkPrograms = $department->workPrograms()
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('dashboard', compact('departmentSlugs', 'department', 'departmentWorkPrograms'));
     }
 
     public function showNotifications(): View

@@ -11,16 +11,22 @@
                 {{-- Greeting Message --}}
                 <div class="flex items-center space-x-4">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900">Hallo, {{ Auth::user()->name }} 👋</h1>
-                        <p class="mt-1 text-gray-600 text-lg">Welcome back to your dashboard!</p>
+                        <h1 class="text-sm sm:text-lg md:text-xl font-bold text-gray-900">
+                            Hallo, {{ Auth::user()->name }} 👋
+                        </h1>
+                        <p class="mt-1 text-sm sm:text-base md:text-lg text-gray-600">
+                            Welcome back to your dashboard!
+                        </p>
                     </div>
                 </div>
 
                 {{-- Quick Links --}}
                 <div class="mt-5">
-                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Quick Links</h2>
+                    <h2 class="text-sm sm:text-lg md:text-xl font-bold text-gray-800 mb-4">
+                        Quick Links
+                    </h2>
 
-                    <ul class="space-y-3 text-base text-blue-700">
+                    <ul class="space-y-3 text-sm sm:text-base md:text-lg text-blue-700">
 
                         <li>
                             <a href="{{ route('profile.edit') }}" class="hover:underline hover:text-blue-900">
@@ -29,16 +35,9 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('dashboard.notifications.index') }}"
-                                class="hover:underline hover:text-blue-900">
-                                Notifications
-                            </a>
-                        </li>
-
-                        <li>
                             <div>
-                                <span>Supervisi Department</span>
-                                <ul class="ml-5 mt-2 space-y-2 text-sm text-blue-600">
+                                <span class="font-medium text-gray-700">Supervisi Department</span>
+                                <ul class="ml-5 mt-2 space-y-2 text-sm sm:text-base text-blue-600">
                                     @forelse ($departmentSlugs as $slug => $name)
                                         <li>
                                             <a href="{{ route('dashboard.modview.department.show', $slug) }}"
@@ -59,6 +58,13 @@
                                     </li>
                                 </ul>
                             </div>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('dashboard.notifications.index') }}"
+                                class="hover:underline hover:text-blue-900">
+                                Notifications
+                            </a>
                         </li>
                     </ul>
                 </div>
