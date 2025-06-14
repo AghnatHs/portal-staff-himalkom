@@ -1,5 +1,7 @@
 @php
-    $navigationLayout = auth()->user()->hasRole('supervisor') ? 'layouts.navigation-spv' : null;
+    $navigationLayout = auth()->user()->hasRole('supervisor')
+        ? 'layouts.navigation-spv'
+        : 'layouts.navigation';
 @endphp
 
 <x-app-layout navigation="{{ $navigationLayout }}">
