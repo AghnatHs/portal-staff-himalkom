@@ -17,26 +17,49 @@
                 </div>
 
                 {{-- Quick Links --}}
-                <div class="mt-10">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-4">Quick Links</h2>
+                <div class="mt-5">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Quick Links</h2>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <a href="{{ route('dashboard.notifications.index') }}"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg py-3 text-center font-medium transition">
-                            Notifications
-                        </a>
+                    <ul class="space-y-3 text-base text-blue-700">
 
-                        <a href="{{ route('dashboard.modview.department.index') }}"
-                            class="bg-green-600 hover:bg-green-700 text-white rounded-lg py-3 text-center font-medium transition">
-                            Supervisi Department
-                        </a>
+                        <li>
+                            <a href="{{ route('profile.edit') }}" class="hover:underline hover:text-blue-900">
+                                Profile
+                            </a>
+                        </li>
 
-                        <a href="{{ route('profile.edit') }}"
-                            class="bg-gray-600 hover:bg-gray-700 text-white rounded-lg py-3 text-center font-medium transition">
-                            Profile
-                        </a>
-                    </div>
+                        <li>
+                            <a href="{{ route('dashboard.notifications.index') }}"
+                                class="hover:underline hover:text-blue-900">
+                                Notifications
+                            </a>
+                        </li>
+
+                        <li>
+                            <div>
+                                <span>Supervisi Department</span>
+                                <ul class="ml-5 mt-2 space-y-2 text-sm text-blue-600">
+                                    @forelse ($departmentSlugs as $slug => $name)
+                                        <li>
+                                            <a href="{{ route('dashboard.modview.department.show', $slug) }}"
+                                                class="hover:underline hover:text-blue-800">
+                                                - {{ $name }}
+                                            </a>
+                                        </li>
+                                    @empty
+                                    @endforelse
+                                    <li>
+                                        <a href="{{ route('dashboard.modview.department.index') }}"
+                                            class="hover:underline hover:text-blue-800">
+                                            - View All Departments
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+
             </div>
         </div>
     </div>

@@ -44,6 +44,10 @@ class DashboardController extends Controller
 
     public function showSupervisor(): View
     {
-        return view('dashboard-spv');
+        $departmentSlugs = Department::orderBy('name')
+            ->pluck('name', 'slug')
+            ->toArray();
+
+        return view('dashboard-spv', compact('departmentSlugs'));
     }
 }
