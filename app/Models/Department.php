@@ -57,7 +57,7 @@ class Department extends Model
     {
         return $this->users()
             ->whereHas('roles', fn($q) => $q->where('name', 'managing director'))
-            ->select(['name', 'email']) 
+            ->select(['id', 'name', 'email'])
             ->first();
     }
 
