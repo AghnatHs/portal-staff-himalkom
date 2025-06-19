@@ -26,7 +26,24 @@
                         <span class="text-xs sm:text-sm text-gray-500">
                             {{ $notification->created_at->format('Y-m-d H:i:s') }}
                         </span>
+                        @if ($notification->read_at)
+                            <span class="text-xs sm:text-sm text-green-500 ml-2">
+                                (Read)
+                            </span>
+                        @else
+                            <span class="text-xs sm:text-sm text-red-500 ml-2">
+                                (Unread)
+                            </span>
+                        @endif
 
+                        @if ($notification->type === \App\Notifications\WorkProgramCommentNotification::class)
+                            <div class="mt-2">
+                                <a href="{{ $notification->data['url'] }}"
+                                    class="text-blue-500 hover:underline text-sm sm:text-base">
+                                    Lihat Komentar
+                                </a>
+                            </div>
+                        @endif
                         @if (is_null($notification->read_at))
                             <div class="mt-2">
                                 <form
