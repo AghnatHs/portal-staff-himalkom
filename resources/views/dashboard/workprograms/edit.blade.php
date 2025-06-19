@@ -52,7 +52,10 @@
         before:rounded-[inherit] before:p-[0.5px]">
         <div class="bg-white rounded-lg md:rounded-xl lg:rounded-2xl p-4 md:p-6 border border-gray-200">
             <h2 class="font-extrabold text-gray-900 md:mb-2 text-center text-lg md:text-xl lg:text-3xl">Edit Program
-                Kerja - {{ $workProgram->name }}</h2>
+                Kerja</h2>
+            <h3 class="font-extrabold text-gray-900 md:mb-2 text-center text-md md:text-md lg:text-lg">
+                [{{ $workProgram->name }}]
+            </h3>
             @if ($errors->any())
                 <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6 border border-red-400">
                     <strong>Terjadi kesalahan:</strong>
@@ -80,7 +83,8 @@
                 <div class="mb-4">
                     <label for="department-placeholder"
                         class="mb-1 block font-normal text-gray-400 text-sm md:text-lg">Department</label>
-                    <input type="text" name="department-placeholder" id="department-placeholder" value="{{ $workProgram->department->name }}" readonly
+                    <input type="text" name="department-placeholder" id="department-placeholder"
+                        value="{{ $workProgram->department->name }}" readonly
                         class="bg-[#FAFAFA] border border-gray-200 shadow-sm rounded-md p-2 w-full focus:ring-1 focus:ring-gray-100 focus:shadow-md focus:border-gray-100 focus:outline-none text-gray-500 text-sm md:text-md lg:text-lg">
                 </div>
 
