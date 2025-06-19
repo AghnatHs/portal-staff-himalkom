@@ -16,19 +16,25 @@
                         Dashboard
                     </x-nav-link>
 
-                    @hasanyrole('managing director')
+                    @hasrole('managing director')
                         <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
                             Program Kerja
                         </x-nav-link>
                     @else
                     @endhasanyrole
 
-                    @hasanyrole('bph')
+                    {{-- IF user is bph only --}}
+                    @hasrole('bph')
+                        @unlessrole('managing director')
+                            <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
+                                Program Kerja
+                            </x-nav-link>
+                        @endunlessrole
                         <x-nav-link :href="route('dashboard.modview.department.index')" :active="request()->routeIs('dashboard.modview.*')">
                             Supervisi (BPH / Supervisor)
                         </x-nav-link>
-                    @else
-                    @endhasanyrole
+                    @endhasrole
+
 
                     <x-nav-link :href="route('dashboard.notifications.index')" :active="request()->routeIs('dashboard.notifications.*')" class="relative">
                         <x-nav-link-count :title="'Notifications'" :count="$unreadNotificationsCount"> </x-nav-link-count>

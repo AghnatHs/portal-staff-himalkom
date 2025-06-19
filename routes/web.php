@@ -34,31 +34,31 @@ Route::middleware('auth')->group(function () {
 // Work Programs
 Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
     Route::get('/', [WorkProgramsController::class, 'index'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.index');
 
     Route::get('/create', [WorkProgramsController::class, 'create'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.create');
 
     Route::get('/{workProgram}', [WorkProgramsController::class, 'detail'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.detail');
 
     Route::get('/{workProgram}/edit', [WorkProgramsController::class, 'edit'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.edit');
 
     Route::post('/', [WorkProgramsController::class, 'store'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.store');
 
     Route::put('/{workProgram}', [WorkProgramsController::class, 'update'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.update');
 
     Route::delete('/{workProgram}', [WorkProgramsController::class, 'destroy'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.destroy');
 });
 
@@ -77,7 +77,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/pdf/{filename}', [PDFController::class, 'showPrivatePdf'])
     ->name('pdf.show'); // auth middleware is in the controller itself
 
-// Department view (access only by managing director of dept, bph, or supervisor)
+// Supervisor ModView (access only by bph or supervisor)
 Route::middleware('auth')
     ->prefix('/dashboard/mod-view')
     ->name('dashboard.modview.')
