@@ -3,37 +3,40 @@
         <div class="flex flex-row items-center">
             <div class="text-gray-500 font-medium text-[11px] md:text-sm ">
                 <nav class="flex items-center space-x-1 md:space-x-2">
-                    @hasanyrole('bph')
+                    @if (Auth::user()->hasRole('bph') && Auth::user()->department->id !== $department->id)
                         <a href="{{ route('dashboard.modview.department.index') }}"
                             class="hover:underline hover:text-[#111B5A] cursor-pointer">
                             Supervisi Department
                         </a>
+                        <span class="text-gray-400">/</span>
+                        <a href="{{ route('dashboard.modview.department.show', ['department' => $department]) }}"
+                            class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                            {{ $department->name }}
+                        </a>
+                        <span class="text-gray-400">/</span>
+                        <span class="text-gray-800 font-semibold">
+                            Create
+                        </span>
                     @else
                         <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}"
                             class="hover:underline hover:text-[#111B5A] cursor-pointer">
                             Program Kerja
                         </a>
-                    @endhasanyrole
-                    <span class="text-gray-400">/</span>
-                    @hasanyrole('bph')
-                        <a href="{{ route('dashboard.modview.department.show', ['department' => $department, 'workProgram']) }}"
-                            class="hover:underline hover:text-[#111B5A] cursor-pointer">
-                            {{ $department->name }}
-                        </a>
-                    @else
+                        <span class="text-gray-400">/</span>
                         <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}"
                             class="hover:underline hover:text-[#111B5A] cursor-pointer">
                             {{ $department->name }}
                         </a>
-                    @endhasanyrole
-                    <span class="text-gray-400">/</span>
-                    <span class="text-gray-800 font-semibold">
-                        Create
-                    </span>
+                        <span class="text-gray-400">/</span>
+                        <span class="text-gray-800 font-semibold">
+                            Create
+                        </span>
+                    @endif
                 </nav>
             </div>
         </div>
     </x-slot>
+
     <div
         class="relative max-w-[90dvw] lg:max-w-6xl mx-auto mt-2 mb-8 p-2 bg-white rounded-xl md:rounded-2xl lg:rounded-3xl shadow-lg 
             before:absolute before:inset-0 before:-z-10 before:bg-gradient-to-r before:from-gray-200 before:to-gray-100 

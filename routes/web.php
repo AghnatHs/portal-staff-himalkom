@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 // Work Programs
 Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
     Route::get('/', [WorkProgramsController::class, 'index'])
-        ->middleware('role:managing director')
+        ->middleware('role:managing director|bph')
         ->name('workProgram.index');
 
     Route::get('/create', [WorkProgramsController::class, 'create'])
