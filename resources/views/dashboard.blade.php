@@ -69,6 +69,42 @@
 
 
                         @hasanyrole('bph')
+                            @unlessrole('managing director')
+                                <li>
+                                    <span> {{ $department->name }}</span>
+                                    <ul class="ml-5 mt-2 space-y-2 text-sm text-blue-600">
+                                        <li>
+                                            <a href="{{ route('dashboard.workProgram.create', $department) }}"
+                                                class="hover:underline hover:text-blue-800">
+                                                - Buat Program Kerja Baru
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <span>- Program Kerja</span>
+                                            <ul class="ml-5 mt-1 space-y-1">
+                                                @forelse ($departmentWorkPrograms as $workProgram)
+                                                    <li>
+                                                        <a href="{{ route('dashboard.workProgram.detail', [$department, $workProgram]) }}"
+                                                            class="hover:underline hover:text-blue-800">
+                                                            - {{ $workProgram->name }}
+                                                        </a>
+                                                    </li>
+                                                @empty
+                                                    <li>
+                                                        <span class="text-gray-500">No Data Available.</span>
+                                                    </li>
+                                                @endforelse
+                                                <li>
+                                                    <a href="{{ route('dashboard.workProgram.index', $department) }}"
+                                                        class="hover:underline hover:text-blue-800">
+                                                        - Lihat semua Program Kerja
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endunlessrole
                             <li>
                                 <div>
                                     <span>Supervisi Department</span>
