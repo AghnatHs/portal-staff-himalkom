@@ -106,7 +106,7 @@ class WorkProgramsController extends Controller
             $workProgram = WorkProgram::create($validated);
             DB::commit();
 
-            if ($this->isCurrentUserBph()) {
+            if ($this->isCurrentUserBph()  && Auth::user()->department->id != $department->id) {
                 return redirect()->route('dashboard.modview.workprogram.show', ['workProgram' => $workProgram, 'department' => $department])
                     ->with('success', ['message' => "Program kerja untuk $department->name berhasil ditambahkan!", 'id' => Str::ulid()->toBase32()]);
             }
@@ -184,7 +184,7 @@ class WorkProgramsController extends Controller
 
             DB::commit();
 
-            if ($this->isCurrentUserBph()) {
+            if ($this->isCurrentUserBph() && Auth::user()->department->id != $department->id) {
                 return redirect()->route('dashboard.modview.workprogram.show', ['workProgram' => $workProgram, 'department' => $department])
                     ->with('success', ['message' => "Program kerja berhasil diperbarui!", 'id' => Str::ulid()->toBase32()]);
             }
@@ -209,7 +209,7 @@ class WorkProgramsController extends Controller
             $workProgram->delete();
             DB::commit();
 
-            if ($this->isCurrentUserBph()) {
+            if ($this->isCurrentUserBph()  && Auth::user()->department->id != $department->id) {
                 return redirect()->route('dashboard.modview.department.show', ['department' => $department])
                     ->with('success', ['message' => "Program kerja berhasil dihapus!", 'id' => Str::ulid()->toBase32()]);
             }
