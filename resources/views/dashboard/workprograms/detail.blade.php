@@ -70,7 +70,7 @@
                 'Proposal' => $workProgram->proposal_url,
                 'LPJ' => $workProgram->lpj_url,
                 'SPJ' => $workProgram->spg_url,
-                'Komnews' => $workProgram->komnews_url
+                'Komnews' => $workProgram->komnews_url,
             ];
         @endphp
 
@@ -78,7 +78,11 @@
             <div class="flex flex-col justify-center">
                 <h2 class="font-bold text-[#111B5A] mb-1 text-md md:text-lg md:mb-2 lg:text-2xl">📋 Informasi Program
                     Kerja</h2>
-                <p class="text-[8px] md:text-[10px] text-gray-400 italic mb-1 md:mb-2 ml-2">id: {{ $workProgram->id }}
+                <p class="text-[8px] md:text-[10px] text-gray-400 italic mb-0 md:mb-0 ml-2">id: {{ $workProgram->id }}
+                <p class="text-[8px] md:text-[10px] text-gray-400 italic mb-0 md:mb-0 ml-2">created at:
+                    {{ $workProgram->created_at->format('d M Y H:i') }}
+                <p class="text-[8px] md:text-[10px] text-gray-400 italic mb-4 md:mb-4 ml-2">last updated:
+                    {{ $workProgram->updated_at->format('d M Y H:i') }}
                 </p>
             </div>
 
