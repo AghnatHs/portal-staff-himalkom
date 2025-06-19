@@ -3,15 +3,29 @@
         <div class="flex flex-row items-center">
             <div class="text-gray-500 font-medium text-[11px] md:text-sm ">
                 <nav class="flex items-center space-x-1 md:space-x-2">
-                    <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}"
-                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
-                        Program Kerja
-                    </a>
+                    @hasanyrole('bph')
+                        <a href="{{ route('dashboard.modview.department.index') }}"
+                            class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                            Supervisi Department
+                        </a>
+                    @else
+                        <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}"
+                            class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                            Program Kerja
+                        </a>
+                    @endhasanyrole
                     <span class="text-gray-400">/</span>
-                    <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}"
-                        class="hover:underline hover:text-[#111B5A] cursor-pointer">
-                        {{ $department->name }}
-                    </a>
+                    @hasanyrole('bph')
+                        <a href="{{ route('dashboard.modview.department.show', ['department' => $department, 'workProgram']) }}"
+                            class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                            {{ $department->name }}
+                        </a>
+                    @else
+                        <a href="{{ route('dashboard.workProgram.index', ['department' => $department]) }}"
+                            class="hover:underline hover:text-[#111B5A] cursor-pointer">
+                            {{ $department->name }}
+                        </a>
+                    @endhasanyrole
                     <span class="text-gray-400">/</span>
                     <span class="text-gray-800 font-semibold">
                         Create
