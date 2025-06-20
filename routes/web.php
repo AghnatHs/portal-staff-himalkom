@@ -27,45 +27,45 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:supervisor')
         ->name('dashboard.supervisor');
     Route::get('/dashboard/{department:slug}', [DashboardController::class, 'show'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph|pjs')
         ->name('dashboard');
 });
 
 // Work Programs
 Route::middleware('auth')->prefix('/dashboard/{department:slug}/workprograms')->name('dashboard.')->group(function () {
     Route::get('/', [WorkProgramsController::class, 'index'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph|pjs')
         ->name('workProgram.index');
 
     Route::get('/create', [WorkProgramsController::class, 'create'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph|pjs')
         ->name('workProgram.create');
 
     Route::get('/{workProgram}', [WorkProgramsController::class, 'detail'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph|pjs')
         ->name('workProgram.detail');
 
     Route::get('/{workProgram}/edit', [WorkProgramsController::class, 'edit'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph|pjs')
         ->name('workProgram.edit');
 
     Route::post('/', [WorkProgramsController::class, 'store'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph||pjs')
         ->name('workProgram.store');
 
     Route::put('/{workProgram}', [WorkProgramsController::class, 'update'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph|pjs')
         ->name('workProgram.update');
 
     Route::delete('/{workProgram}', [WorkProgramsController::class, 'destroy'])
-        ->middleware('role:managing director|bph')
+        ->middleware('role:managing director|bph|pjs')
         ->name('workProgram.destroy');
 });
 
 //Comment Routes
 Route::middleware('auth')->group(function () {
     Route::prefix('/dashboard/{workProgram}/comments')
-        ->middleware('role:managing director|bph|supervisor')
+        ->middleware('role:managing director|bph|supervisor|pjs')
         ->name('dashboard.workProgram.')
         ->group(function () {
             Route::post('/', [WorkProgramCommentController::class, 'store'])->name('comment.store');

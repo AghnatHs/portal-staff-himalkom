@@ -16,7 +16,7 @@
                         Dashboard
                     </x-nav-link>
 
-                    @hasrole('managing director')
+                    @hasrole('managing director|pjs')
                         <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
                             Program Kerja
                         </x-nav-link>
@@ -25,7 +25,7 @@
 
                     {{-- IF user is bph only --}}
                     @hasrole('bph')
-                        @unlessrole('managing director')
+                        @unlessrole('managing director|pjs')
                             <x-nav-link :href="route('dashboard.workProgram.index', ['department' => Auth::user()->department])" :active="request()->routeIs('dashboard.workProgram.*')">
                                 Program Kerja
                             </x-nav-link>

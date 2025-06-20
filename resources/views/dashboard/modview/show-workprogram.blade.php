@@ -154,6 +154,9 @@
                                                 •
                                                 {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}</span>
                                         </p>
+                                        <p class="text-[9px] md:text-[14px] lg:text-sm text-gray-400 font-normal">
+                                            {{ $comment->author->getRoleNameForTitle() }}
+                                        </p>
                                         <div
                                             class="text-[12px] md:text-[16px] lg:text-md trix-content font-normal text-gray-600 mt-1 md:mt-2">
                                             {!! $comment->content !!}

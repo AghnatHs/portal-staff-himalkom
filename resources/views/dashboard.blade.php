@@ -29,7 +29,7 @@
                             </a>
                         </li>
 
-                        @hasanyrole('managing director')
+                        @hasanyrole('managing director|pjs')
                             <li>
                                 <span> {{ $department->name }}</span>
                                 <ul class="ml-5 mt-2 space-y-2 text-sm text-blue-600">
@@ -69,7 +69,7 @@
 
 
                         @hasanyrole('bph')
-                            @unlessrole('managing director')
+                            @unlessrole('managing director|pjs')
                                 <li>
                                     <span> {{ $department->name }}</span>
                                     <ul class="ml-5 mt-2 space-y-2 text-sm text-blue-600">
