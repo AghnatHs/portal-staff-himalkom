@@ -22,13 +22,14 @@ class WorkProgramCommentController extends Controller
         DB::beginTransaction();
 
         try {
-            WorkProgramComment::create([
+            $newComment = WorkProgramComment::create([
                 'content' => $request->content,
                 'work_program_id' => $workProgram->id,
                 'user_id' => Auth::id(),
             ]);
 
             $managingDirector = $workProgram->department->managing_director;
+            $pjs = $workProgram->department->pjs;
 
             if ($managingDirector && $managingDirector->id !== Auth::user()->id) {
                 $routeToMD = route('dashboard.workProgram.detail', [
@@ -37,10 +38,25 @@ class WorkProgramCommentController extends Controller
                 ]);
 
                 $managingDirector->notify(new WorkProgramCommentNotification(
-                    'Komentar Baru pada Program Kerja '. $workProgram->name,
-                    'Ada komentar baru pada program kerja: ' . $workProgram->name .' oleh ' . Auth::user()->name,
+                    'Komentar Baru pada Program Kerja ' . $workProgram->name,
+                    '"' . strip_tags(html_entity_decode($newComment->content)) .  '" oleh ' . Auth::user()->name,
                     $routeToMD
                 ));
+            }
+
+            // Notify all PJs (except the commenter)
+            foreach ($pjs as $pj) {
+                if ($pj->id !== Auth::user()->id) {
+                    $routeToPjs = route('dashboard.workProgram.detail', [
+                        'department' => $workProgram->department,
+                        'workProgram' => $workProgram,
+                    ]);
+                    $pj->notify(new WorkProgramCommentNotification(
+                        'Komentar Baru pada Program Kerja ' . $workProgram->name,
+                         '"' . strip_tags(html_entity_decode($newComment->content)) .  '" oleh ' . Auth::user()->name,
+                        $routeToPjs
+                    ));
+                }
             }
 
             DB::commit();
