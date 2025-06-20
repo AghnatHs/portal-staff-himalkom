@@ -94,7 +94,7 @@ class User extends Authenticatable implements FilamentUser
     public function getDashboardRoute(): string
     {
         $roles = $this->pluckRoleNames();
-        if ($roles->contains('managing director') || $roles->contains('bph')) {
+        if ($roles->contains('managing director') || $roles->contains('bph') || $roles->contains('pjs')) {
             return route('dashboard', ['department' => $this->department]);
         } else if ($roles->contains('supervisor')) { // supervisor
             return route('dashboard.supervisor');
