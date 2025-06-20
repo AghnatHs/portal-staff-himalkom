@@ -103,6 +103,22 @@ class User extends Authenticatable implements FilamentUser
         }
     }
 
+    public function getRoleNameForTitle(): string
+    {
+        $roles = $this->pluckRoleNames();
+        if ($roles->contains('managing director')) {
+            return 'Managing Director of ' . $this->department->name;
+        } elseif ($roles->contains('bph')) {
+            return 'Badan Pengurus Harian';
+        } elseif ($roles->contains('pjs')) {
+            return 'PJS of ' . $this->department->name;
+        } elseif ($roles->contains('supervisor')) {
+            return 'Supervisor';
+        } else {
+            return '-';
+        }
+    }
+
     public function workProgramComments(): HasMany
     {
         return $this->hasMany(WorkProgramComment::class);
